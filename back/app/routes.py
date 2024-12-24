@@ -2,6 +2,7 @@ from app import db
 from .models import Whisky, Distillery, Tasting, Negotiant
 from flask import Blueprint, jsonify, request
 from .repositories import DistilleryRepository, NegotiantRepository, WhiskyRepository, TastingRepository
+from .services import WhiskyService
 
 api = Blueprint('v1', __name__)
 
@@ -48,13 +49,13 @@ def delete_distillery(distillery_id):
 @api.route('/api/whiskies', methods=['GET'])
 def get_whiskies():
     whiskies = WhiskyRepository.get_all()
-    return jsonify([whisky.to_dict() for whisky in whiskies])
+    return jsonify([WhiskyService.get_whisky_with_dependencies(whisky.id) for whisky in whiskies])
 
 @api.route('/api/whiskies/<whisky_id>', methods=['GET'])
 def get_whisky(whisky_id):
-    whisky = WhiskyRepository.get_by_id(whisky_id)
-    if whisky:
-        return jsonify(whisky.to_dict())
+    whiskydict = WhiskyService.get_whisky_with_dependencies(whisky_id)
+    if whiskydict:
+        return jsonify(whiskydict)
     return jsonify({'error': 'Whisky not found'}), 404
 
 @api.route('/api/whiskies', methods=['POST'])
