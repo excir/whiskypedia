@@ -7,8 +7,8 @@
         :loading="loading"
       >
         <template #item.actions="{ item }">
-          <v-btn icon="mdi-pencil" size="small" @click="editWhisky(item.raw)" />
-          <v-btn icon="mdi-delete" size="small" color="error" @click="confirmDelete(item.raw)" />
+          <v-btn icon="mdi-pencil" size="small" @click="" />
+          <v-btn icon="mdi-delete" size="small" color="error" @click="" />
         </template>
       </v-data-table>
       
@@ -38,10 +38,10 @@
     { title: 'Actions', key: 'actions' }
   ]
   
-  const confirmDelete = (whisky: Whisky) => {
-    whiskyToDelete.value = whisky
-    deleteDialog.value = true
-  }
+  // const confirmDelete = (whisky: Whisky) => {
+  //   whiskyToDelete.value = whisky
+  //   deleteDialog.value = true
+  // }
   
   onMounted(async () => {
     await whiskyStore.fetchWhiskies()
