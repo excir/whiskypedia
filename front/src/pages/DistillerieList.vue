@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Distillerie</h1>
+    <v-btn @click="createDistillerie">Créer une Distillerie</v-btn>
     <v-container>
       <v-data-table :headers="headers" :items="distilleries" :loading="loading">
         <template #item.actions="{ item }">
@@ -9,7 +10,11 @@
             size="small"
             @click="openDistillerie(item.id)"
           />
-          <v-btn icon="mdi-pencil" size="small" @click="" />
+          <v-btn
+            icon="mdi-pencil"
+            size="small"
+            @click="editDistillerie(item.id)"
+          />
           <v-btn icon="mdi-delete" size="small" color="error" @click="" />
         </template>
       </v-data-table>
@@ -36,7 +41,7 @@ const router = useRouter()
 const headers = [
   { title: 'Nom', key: 'name' },
   { title: 'Pays', key: 'country' },
-  { title: 'Région', key: 'region' },
+  { title: 'Nb. de Whiskies', key: 'whiskies.length' },
   { title: 'Actions', key: 'actions' },
 ]
 
@@ -45,9 +50,17 @@ const headers = [
 //   deleteDialog.value = true
 // }
 
-const openDistillerie = (id: string) => {
+const openDistillerie = (id?: string) => {
   console.log(id)
   router.push({ name: '/Distillerie', query: { id } })
+}
+
+const createDistillerie = () => {
+  router.push({ name: '/DistillerieEdit' })
+}
+
+const editDistillerie = (id?: string) => {
+  router.push({ name: '/DistillerieEdit', query: { id } })
 }
 
 onMounted(async () => {

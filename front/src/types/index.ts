@@ -1,9 +1,9 @@
 // src/types/index.ts
 export interface Whisky {
-  id: string
+  id?: string
   name: string
-  distillery_id: string
-  negotiant_id?: string
+  distillery_id: string | null
+  negociant_id?: string | null
   alcohol_percentage: number
   whisky_type: string
   bottle_size_cl: number
@@ -15,20 +15,20 @@ export interface Whisky {
   finish?: string
   photo?: string
   distillery?: Distillery
-  negotiant?: Negotiant
+  negociant?: Negociant
   tastings?: Tasting[]
 }
 
 export interface Distillery {
-  id: string
+  id?: string
   name: string
   country: string
   notes?: string
   whiskies?: Whisky[]
 }
 
-export interface Negotiant {
-  id: string
+export interface Negociant {
+  id?: string
   name: string
   country?: string
   notes?: string
@@ -36,9 +36,8 @@ export interface Negotiant {
 }
 
 export interface Tasting {
-  id: string
+  id?: string
   whisky_id: string
   rating: number
   tasting_date: string
-  whisky?: Whisky
 }

@@ -1,11 +1,16 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Négociant</h1>
+    <v-btn @click="createNegociant">Créer un Négociant</v-btn>
     <v-container>
       <v-data-table :headers="headers" :items="negociants" :loading="loading">
         <template #item.actions="{ item }">
           <v-btn icon="mdi-eye" size="small" @click="openNegociant(item.id)" />
-          <v-btn icon="mdi-pencil" size="small" @click="" />
+          <v-btn
+            icon="mdi-pencil"
+            size="small"
+            @click="editNegociant(item.id)"
+          />
           <v-btn icon="mdi-delete" size="small" color="error" @click="" />
         </template>
       </v-data-table>
@@ -21,26 +26,35 @@
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useNegociantStore } from '@/stores/negociant'
-import type { Negotiant } from '@/types'
+import type { Negociant } from '@/types'
 
 const negociantStore = useNegociantStore()
 const deleteDialog = ref(false)
-const negociantToDelete = ref<Negotiant | null>(null)
+const negociantToDelete = ref<Negociant | null>(null)
 const { negociants, loading } = storeToRefs(negociantStore)
 const router = useRouter()
 
 const headers = [
   { title: 'Nom', key: 'name' },
   { title: 'Pays', key: 'country' },
+  { title: 'Nb. de Whiskies', key: 'whiskies.length' },
   { title: 'Actions', key: 'actions' },
 ]
 
-// const confirmDelete = (negociant: Negotiant) => {
+// const confirmDelete = (negociant: Negociant) => {
 //   negociantToDelete.value = negociant
 //   deleteDialog.value = true
 // }
 
-const openNegociant = (id: string) => {
+const createNegociant = () => {
+  router.push({ name: '/NegociantEdit' })
+}
+
+const editNegociant = (id?: string) => {
+  router.push({ name: '/NegociantEdit', query: { id } })
+}
+
+const openNegociant = (id?: string) => {
   console.log(id)
   router.push({ name: '/Negociant', query: { id } })
 }

@@ -14,13 +14,13 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-import type { Negotiant } from '@/types'
+import type { Negociant } from '@/types'
 
 export default defineComponent({
   name: 'Negociant',
   props: {
     negociant: {
-      type: Object as PropType<Negotiant>,
+      type: Object as PropType<Negociant>,
       required: true,
     },
   },

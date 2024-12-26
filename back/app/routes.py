@@ -1,7 +1,7 @@
 """Routes de l'API pour les entités."""
 from flask import Blueprint, jsonify, request
-from .models import Whisky, Distillery, Tasting, Negotiant
-from .repositories import DistilleryRepository, NegotiantRepository, WhiskyRepository, TastingRepository
+from .models import Whisky, Distillery, Tasting, Negociant
+from .repositories import DistilleryRepository, NegociantRepository, WhiskyRepository, TastingRepository
 from .services import WhiskyService
 
 api = Blueprint('v1', __name__)
@@ -10,14 +10,21 @@ api = Blueprint('v1', __name__)
 def get_distilleries():
     """Récupère toutes les distilleries."""
     distilleries = DistilleryRepository.get_all()
-    return jsonify([distillery.to_dict() for distillery in distilleries])
+    distilleries_with_whiskies = []
+    for distillery in distilleries:
+        distillery_dict = distillery.to_dict()
+        distillery_dict['whiskies'] = [whisky.to_dict() for whisky in distillery.whiskies]
+        distilleries_with_whiskies.append(distillery_dict)
+    return jsonify(distilleries_with_whiskies)
 
 @api.route('/api/distilleries/<distillery_id>', methods=['GET'])
 def get_distillery(distillery_id):
     """Récupère une distillerie par son ID."""
     distillery = DistilleryRepository.get_by_id(distillery_id)
     if distillery:
-        return jsonify(distillery.to_dict())
+        distillery_dict = distillery.to_dict()
+        distillery_dict['whiskies'] = [whisky.to_dict() for whisky in distillery.whiskies]
+        return jsonify(distillery_dict)
     return jsonify({'error': 'Distillery not found'}), 404
 
 @api.route('/api/distilleries', methods=['POST'])
@@ -49,7 +56,7 @@ def delete_distillery(distillery_id):
         return jsonify({'message': 'Distillery deleted'})
     return jsonify({'error': 'Distillery not found'}), 404
 
-# Similar routes for Negotiant, Whisky, and Tasting can be created following the same pattern
+# Similar routes for Negociant, Whisky, and Tasting can be created following the same pattern
 
 @api.route('/api/whiskies', methods=['GET'])
 def get_whiskies():
@@ -145,45 +152,53 @@ def delete_tasting(tasting_id):
         return jsonify({'message': 'Tasting deleted'})
     return jsonify({'error': 'Tasting not found'}), 404
 
-@api.route('/api/negotiants', methods=['GET'])
-def get_negotiants():
+@api.route('/api/negociants', methods=['GET'])
+def get_negociants():
     """Récupère tous les négociants."""
-    negotiants = NegotiantRepository.get_all()
-    return jsonify([negotiant.to_dict() for negotiant in negotiants])
+    negociants = NegociantRepository.get_all()
+    negociants_with_whiskies = []
+    for negociant in negociants:
+        negociant_dict = negociant.to_dict()
+        negociant_dict['whiskies'] = [whisky.to_dict() for whisky in negociant.whiskies]
+        negociants_with_whiskies.append(negociant_dict)
+    return jsonify(negociants_with_whiskies)
 
-@api.route('/api/negotiants/<negotiant_id>', methods=['GET'])
-def get_negotiant(negotiant_id):
+@api.route('/api/negociants/<negociant_id>', methods=['GET'])
+def get_negociant(negociant_id):
     """Récupère un négociant par son ID."""
-    negotiant = NegotiantRepository.get_by_id(negotiant_id)
-    if negotiant:
-        return jsonify(negotiant.to_dict())
-    return jsonify({'error': 'Negotiant not found'}), 404
+    negociant = NegociantRepository.get_by_id(negociant_id)
+    if negociant:
+        negociant_dict = negociant.to_dict()
+        negociant_dict['whiskies'] = [whisky.to_dict() for whisky in negociant.whiskies]
+        return jsonify(negociant_dict)
+    return jsonify({'error': 'Negociant not found'}), 404
 
-@api.route('/api/negotiants', methods=['POST'])
-def add_negotiant():
+@api.route('/api/negociants', methods=['POST'])
+def add_negociant():
     """Ajoute un nouveau négociant."""
     data = request.json
-    negotiant = Negotiant(**data)
-    NegotiantRepository.add(negotiant)
-    return jsonify(negotiant.to_dict()), 201
+    negociant = Negociant(**data)
+    NegociantRepository.add(negociant)
+    return jsonify(negociant.to_dict()), 201
 
-@api.route('/api/negotiants/<negotiant_id>', methods=['PUT'])
-def update_negotiant(negotiant_id):
+@api.route('/api/negociants/<negociant_id>', methods=['PUT'])
+def update_negociant(negociant_id):
     """Met à jour un négociant existant."""
     data = request.json
-    negotiant = NegotiantRepository.get_by_id(negotiant_id)
-    if negotiant:
+    print(data)
+    negociant = NegociantRepository.get_by_id(negociant_id)
+    if negociant:
         for key, value in data.items():
-            setattr(negotiant, key, value)
-        NegotiantRepository.update()
-        return jsonify(negotiant.to_dict())
-    return jsonify({'error': 'Negotiant not found'}), 404
+            setattr(negociant, key, value)
+        NegociantRepository.update()
+        return jsonify(negociant.to_dict())
+    return jsonify({'error': 'Negociant not found'}), 404
 
-@api.route('/api/negotiants/<negotiant_id>', methods=['DELETE'])
-def delete_negotiant(negotiant_id):
+@api.route('/api/negociants/<negociant_id>', methods=['DELETE'])
+def delete_negociant(negociant_id):
     """Supprime un négociant par son ID."""
-    negotiant = NegotiantRepository.get_by_id(negotiant_id)
-    if negotiant:
-        NegotiantRepository.delete(negotiant)
-        return jsonify({'message': 'Negotiant deleted'})
-    return jsonify({'error': 'Negotiant not found'}), 404
+    negociant = NegociantRepository.get_by_id(negociant_id)
+    if negociant:
+        NegociantRepository.delete(negociant)
+        return jsonify({'message': 'Negociant deleted'})
+    return jsonify({'error': 'Negociant not found'}), 404

@@ -13,7 +13,7 @@ class Distillery(db.Model, DictExtension):
 
     whiskies = db.relationship('Whisky', backref='distillery', lazy=True)
 
-class Negotiant(db.Model, DictExtension):
+class Negociant(db.Model, DictExtension):
     """Modèle représentant un négociant."""
 
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -29,7 +29,7 @@ class Whisky(db.Model, DictExtension):
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(100), nullable=False)
     distillery_id = db.Column(db.String, db.ForeignKey('distillery.id'), nullable=False)
-    negotiant_id = db.Column(db.String, db.ForeignKey('negotiant.id'), nullable=True)
+    negociant_id = db.Column(db.String, db.ForeignKey('negociant.id'), nullable=True)
     alcohol_percentage = db.Column(db.Float, nullable=False)
     whisky_type = db.Column(db.String(50), nullable=False)
     bottle_size_cl = db.Column(db.Float, nullable=False)

@@ -30,14 +30,14 @@ export const useWhiskyStore = defineStore('whisky', {
       }
     },
 
-    async fetchWhisky(id: string): Promise<void> {
+    async fetchWhisky(id: string): Promise<Whisky | null> {
       try {
-        const response = await axios.get<Whisky>(
-          `${API_BASE}/whiskies/${id}/details`
-        )
+        const response = await axios.get<Whisky>(`${API_BASE}/whiskies/${id}`)
         this.currentWhisky = response.data
+        return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
+        return null
       }
     },
 

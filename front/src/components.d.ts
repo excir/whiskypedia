@@ -11,6 +11,7 @@ declare module 'vue' {
     DistilleryForm: typeof import('./components/DistilleryForm.vue')['default']
     NavBar: typeof import('./components/NavBar.vue')['default']
     Negociant: typeof import('./components/Negociant.vue')['default']
+    NegociantForm: typeof import('./components/NegociantForm.vue')['default']
     NegotiantForm: typeof import('./components/NegotiantForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -6,7 +6,7 @@
     <div class="flex flex-col">
       <label for="name" class="mb-1 font-semibold">Nom</label>
       <input
-        v-model="distillery.name"
+        v-model="negociant.name"
         id="name"
         type="text"
         required
@@ -16,17 +16,16 @@
     <div class="flex flex-col">
       <label for="country" class="mb-1 font-semibold">Pays</label>
       <input
-        v-model="distillery.country"
+        v-model="negociant.country"
         id="country"
         type="text"
-        required
         class="rounded border p-2"
       />
     </div>
     <div class="flex flex-col">
       <label for="notes" class="mb-1 font-semibold">Notes</label>
       <textarea
-        v-model="distillery.notes"
+        v-model="negociant.notes"
         id="notes"
         class="rounded border p-2"
       ></textarea>
@@ -41,19 +40,19 @@
 </template>
 
 <script lang="ts" setup>
-import type { Distillery } from '@/types'
+import type { Negociant } from '@/types'
 import { type PropType, defineProps, defineEmits } from 'vue'
 
 const emit = defineEmits()
 
 const props = defineProps({
-  distillery: {
-    type: Object as PropType<Distillery>,
+  negociant: {
+    type: Object as PropType<Negociant>,
     required: true,
   },
 })
 
 const handleSubmit = () => {
-  emit('submit', props.distillery)
+  emit('submit', props.negociant)
 }
 </script>

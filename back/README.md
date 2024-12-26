@@ -12,7 +12,7 @@ The Whisky Distillery App is a Flask-based web application that serves as a repo
   - Bottle size (cl)
   - Price
   - Peated or not
-  - Negotiant (if applicable)
+  - Negociant (if applicable)
   - Tasting notes (nose, appearance, palate, finish)
   - User tasting details (rating, date)
   - Photo

@@ -20,14 +20,16 @@ export const useDistillerieStore = defineStore('distillerie', {
   }),
 
   actions: {
-    async fetchDistilleries(): Promise<void> {
+    async fetchDistilleries(): Promise<Distillery[] | null> {
       try {
         const response = await axios.get<Distillery[]>(
           `${API_BASE}/distilleries`
         )
         this.distilleries = response.data
+        return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
+        return null
       }
     },
 
@@ -64,6 +66,7 @@ export const useDistillerieStore = defineStore('distillerie', {
       id: string,
       distillerieData: Partial<Distillery>
     ): Promise<Distillery> {
+      distillerieData.whiskies = undefined
       try {
         const response = await axios.put<Distillery>(
           `${API_BASE}/distilleries/${id}`,

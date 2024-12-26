@@ -13,7 +13,7 @@
         "notes": "Pioneers of Japanese whisky with a rich history."
       }
     ],
-    "negotiants": [
+    "negociants": [
       {
         "id": "e956619f-67f1-4e7b-90a6-fd7b306f9c81",
         "name": "La Maison du Whisky",
@@ -32,7 +32,7 @@
         "id": "12b230c1-6d2d-43c9-9610-b37257d9ff13",
         "name": "Glenfiddich 18 Year Old",
         "distillery_id": "ac1854a4-acc4-441a-b6c5-5a6fbbd17870",
-        "negotiant_id": "e956619f-67f1-4e7b-90a6-fd7b306f9c81",
+        "negociant_id": "e956619f-67f1-4e7b-90a6-fd7b306f9c81",
         "alcohol_percentage": 40.0,
         "whisky_type": "Single Malt",
         "bottle_size_cl": 70,
@@ -48,7 +48,7 @@
         "id": "bf026667-2bec-4898-9446-66640281359b",
         "name": "Yamazaki 12 Year Old",
         "distillery_id": "deef3815-48c7-48fc-897d-b548d8d3adb8",
-        "negotiant_id": "eb6bacb4-b3b8-42b3-9d3b-dcf8598bf0b1",
+        "negociant_id": "eb6bacb4-b3b8-42b3-9d3b-dcf8598bf0b1",
         "alcohol_percentage": 43.0,
         "whisky_type": "Single Malt",
         "bottle_size_cl": 70,

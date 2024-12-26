@@ -1,7 +1,7 @@
 """Repositories pour les opérations CRUD sur les entités."""
 
 from app import db
-from .models import Distillery, Negotiant, Whisky, Tasting
+from .models import Distillery, Negociant, Whisky, Tasting
 
 class DistilleryRepository:
     """Repository pour les opérations CRUD sur les distilleries."""
@@ -33,23 +33,23 @@ class DistilleryRepository:
         db.session.delete(distillery)
         db.session.commit()
 
-class NegotiantRepository:
+class NegociantRepository:
     """Repository pour les opérations CRUD sur les négociants."""
 
     @staticmethod
-    def get_all() -> list[Negotiant]:
+    def get_all() -> list[Negociant]:
         """Récupère tous les négociants."""
-        return Negotiant.query.all()
+        return Negociant.query.all()
 
     @staticmethod
-    def get_by_id(negotiant_id: int) -> Negotiant:
+    def get_by_id(negociant_id: int) -> Negociant:
         """Récupère un négociant par son ID."""
-        return Negotiant.query.get(negotiant_id)
+        return Negociant.query.get(negociant_id)
 
     @staticmethod
-    def add(negotiant: Negotiant) -> None:
+    def add(negociant: Negociant) -> None:
         """Ajoute un nouveau négociant."""
-        db.session.add(negotiant)
+        db.session.add(negociant)
         db.session.commit()
 
     @staticmethod
@@ -58,9 +58,9 @@ class NegotiantRepository:
         db.session.commit()
 
     @staticmethod
-    def delete(negotiant: Negotiant) -> None:
+    def delete(negociant: Negociant) -> None:
         """Supprime un négociant."""
-        db.session.delete(negotiant)
+        db.session.delete(negociant)
         db.session.commit()
 
 class WhiskyRepository:

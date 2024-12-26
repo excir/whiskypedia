@@ -1,110 +1,178 @@
-<!-- filepath: /Users/adrienschricke/Projects/whiskypedia/front/whiskypedia/src/components/WhiskyForm.vue -->
 <template>
-  <form @submit.prevent="handleSubmit">
-    <div>
-      <label for="name">Nom</label>
-      <input v-model="whisky.name" id="name" type="text" required />
-    </div>
-    <div>
-      <label for="distillery_id">Distillerie</label>
+  <form
+    @submit.prevent="handleSubmit"
+    class="space-y-4 rounded bg-white p-4 shadow-md"
+  >
+    <div class="flex flex-col">
+      <label for="name" class="mb-1 font-semibold">Nom</label>
       <input
+        v-model="whisky.name"
+        id="name"
+        type="text"
+        required
+        class="rounded border p-2"
+      />
+    </div>
+    <div class="flex flex-col">
+      <label for="distillery_id" class="mb-1 font-semibold">Distillerie</label>
+      <select
         v-model="whisky.distillery_id"
         id="distillery_id"
-        type="text"
         required
-      />
+        class="rounded border p-2"
+      >
+        <option
+          v-for="distillery in distilleries"
+          :key="distillery.id"
+          :value="distillery.id"
+        >
+          {{ distillery.name }}
+        </option>
+      </select>
     </div>
-    <div>
-      <label for="negotiant_id">Négociant</label>
-      <input
-        v-model="whisky.negotiant_id"
+    <div class="flex flex-col">
+      <label for="negotiant_id" class="mb-1 font-semibold">Négociant</label>
+      <select
+        v-model="whisky.negociant_id"
         id="negotiant_id"
-        type="text"
-        required
-      />
+        class="rounded border p-2"
+      >
+        <option value="">Aucun</option>
+        <option
+          v-for="negociant in negociants"
+          :key="negociant.id"
+          :value="negociant.id"
+        >
+          {{ negociant.name }}
+        </option>
+      </select>
     </div>
-    <div>
-      <label for="alcohol_percentage">Pourcentage d'alcool</label>
+    <div class="flex flex-col">
+      <label for="alcohol_percentage" class="mb-1 font-semibold"
+        >Pourcentage d'alcool</label
+      >
       <input
         v-model="whisky.alcohol_percentage"
         id="alcohol_percentage"
         type="number"
         required
+        class="rounded border p-2"
       />
     </div>
-    <div>
-      <label for="whisky_type">Type de whisky</label>
+    <div class="flex flex-col">
+      <label for="whisky_type" class="mb-1 font-semibold">Type de whisky</label>
       <input
         v-model="whisky.whisky_type"
         id="whisky_type"
         type="text"
         required
+        class="rounded border p-2"
       />
     </div>
-    <div>
-      <label for="bottle_size_cl">Taille de la bouteille (cl)</label>
+    <div class="flex flex-col">
+      <label for="bottle_size_cl" class="mb-1 font-semibold"
+        >Taille de la bouteille (cl)</label
+      >
       <input
         v-model="whisky.bottle_size_cl"
         id="bottle_size_cl"
         type="number"
         required
+        class="rounded border p-2"
       />
     </div>
-    <div>
-      <label for="price">Prix</label>
-      <input v-model="whisky.price" id="price" type="number" required />
+    <div class="flex flex-col">
+      <label for="price" class="mb-1 font-semibold">Prix</label>
+      <input
+        v-model="whisky.price"
+        id="price"
+        type="number"
+        step="0.01"
+        required
+        class="rounded border p-2"
+      />
     </div>
-    <div>
-      <label for="is_peated">Tourbé</label>
-      <input v-model="whisky.is_peated" id="is_peated" type="checkbox" />
+    <div class="flex items-center">
+      <label for="is_peated" class="mr-2 font-semibold">Tourbé</label>
+      <input
+        v-model="whisky.is_peated"
+        id="is_peated"
+        type="checkbox"
+        class="h-5 w-5"
+      />
     </div>
-    <div>
-      <label for="nose">Nez</label>
-      <textarea v-model="whisky.nose" id="nose"></textarea>
+    <div class="flex flex-col">
+      <label for="nose" class="mb-1 font-semibold">Nez</label>
+      <textarea
+        v-model="whisky.nose"
+        id="nose"
+        class="rounded border p-2"
+      ></textarea>
     </div>
-    <div>
-      <label for="appearance">Apparence</label>
-      <textarea v-model="whisky.appearance" id="appearance"></textarea>
+    <div class="flex flex-col">
+      <label for="appearance" class="mb-1 font-semibold">Apparence</label>
+      <textarea
+        v-model="whisky.appearance"
+        id="appearance"
+        class="rounded border p-2"
+      ></textarea>
     </div>
-    <div>
-      <label for="palate">Palais</label>
-      <textarea v-model="whisky.palate" id="palate"></textarea>
+    <div class="flex flex-col">
+      <label for="palate" class="mb-1 font-semibold">Palais</label>
+      <textarea
+        v-model="whisky.palate"
+        id="palate"
+        class="rounded border p-2"
+      ></textarea>
     </div>
-    <div>
-      <label for="finish">Finale</label>
-      <textarea v-model="whisky.finish" id="finish"></textarea>
+    <div class="flex flex-col">
+      <label for="finish" class="mb-1 font-semibold">Finale</label>
+      <textarea
+        v-model="whisky.finish"
+        id="finish"
+        class="rounded border p-2"
+      ></textarea>
     </div>
-    <div>
-      <label for="photo">Photo</label>
-      <input v-model="whisky.photo" id="photo" type="text" />
+    <div class="flex flex-col">
+      <label for="photo" class="mb-1 font-semibold">Photo</label>
+      <input
+        v-model="whisky.photo"
+        id="photo"
+        type="text"
+        class="rounded border p-2"
+      />
     </div>
-    <button type="submit">Enregistrer</button>
+    <button
+      type="submit"
+      class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+    >
+      Enregistrer
+    </button>
   </form>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { type Whisky } from '@/types'
+import type { Distillery, Negociant, Whisky } from '@/types'
+import { type PropType, defineProps, defineEmits } from 'vue'
 
-const whisky = ref<Whisky>({
-  id: '',
-  name: '',
-  distillery_id: '',
-  negotiant_id: '',
-  alcohol_percentage: 0,
-  whisky_type: '',
-  bottle_size_cl: 0,
-  price: 0,
-  is_peated: false,
-  nose: '',
-  appearance: '',
-  palate: '',
-  finish: '',
-  photo: '',
+const emit = defineEmits()
+
+const props = defineProps({
+  whisky: {
+    type: Object as PropType<Whisky>,
+    required: true,
+  },
+  distilleries: {
+    type: Array as PropType<Distillery[]>,
+    required: true,
+  },
+  negociants: {
+    type: Array as PropType<Negociant[]>,
+    required: true,
+  },
 })
 
 const handleSubmit = () => {
-  // Logique pour soumettre le formulaire
-  console.log(whisky.value)
+  emit('submit', props.whisky)
 }
 </script>

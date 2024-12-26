@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import type { Negotiant } from '@/types'
+import type { Negociant } from '@/types'
 
 const API_BASE = '/back'
 
 interface NegociantState {
-  negociants: Negotiant[]
-  currentNegociant: Negotiant | null
+  negociants: Negociant[]
+  currentNegociant: Negociant | null
   loading: boolean
   error: string | null
 }
@@ -20,19 +20,21 @@ export const useNegociantStore = defineStore('negociant', {
   }),
 
   actions: {
-    async fetchNegociants(): Promise<void> {
+    async fetchNegociants(): Promise<Negociant[] | null> {
       try {
-        const response = await axios.get<Negotiant[]>(`${API_BASE}/negotiants`)
+        const response = await axios.get<Negociant[]>(`${API_BASE}/negociants`)
         this.negociants = response.data
+        return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
+        return null
       }
     },
 
-    async fetchNegociant(id: string): Promise<Negotiant | null> {
+    async fetchNegociant(id: string): Promise<Negociant | null> {
       try {
-        const response = await axios.get<Negotiant>(
-          `${API_BASE}/negotiants/${id}`
+        const response = await axios.get<Negociant>(
+          `${API_BASE}/negociants/${id}`
         )
         this.currentNegociant = response.data
         return response.data
@@ -43,11 +45,11 @@ export const useNegociantStore = defineStore('negociant', {
     },
 
     async createNegociant(
-      negociantData: Partial<Negotiant>
-    ): Promise<Negotiant> {
+      negociantData: Partial<Negociant>
+    ): Promise<Negociant> {
       try {
-        const response = await axios.post<Negotiant>(
-          `${API_BASE}/negotiants`,
+        const response = await axios.post<Negociant>(
+          `${API_BASE}/negociants`,
           negociantData
         )
         this.negociants.push(response.data)
@@ -60,17 +62,18 @@ export const useNegociantStore = defineStore('negociant', {
 
     async updateNegociant(
       id: string,
-      negociantData: Partial<Negotiant>
-    ): Promise<Negotiant> {
+      negociantData: Partial<Negociant>
+    ): Promise<Negociant> {
+      negociantData.whiskies = undefined
       try {
-        const response = await axios.put<Negotiant>(
-          `${API_BASE}/negotiants/${id}`,
+        const response = await axios.put<Negociant>(
+          `${API_BASE}/negociants/${id}`,
           negociantData
         )
         const index = this.negociants.findIndex(
           (negociant) => negociant.id === id
         )
-        if (index !== -1) {
+        if (index !== undefined) {
           this.negociants[index] = response.data
         }
         return response.data
@@ -82,7 +85,7 @@ export const useNegociantStore = defineStore('negociant', {
 
     async deleteNegociant(id: string): Promise<void> {
       try {
-        await axios.delete(`${API_BASE}/negotiants/${id}`)
+        await axios.delete(`${API_BASE}/negociants/${id}`)
         this.negociants = this.negociants.filter(
           (negociant) => negociant.id !== id
         )

@@ -1,5 +1,5 @@
 """Services pour les opérations complexes sur les entités."""
-from .repositories import WhiskyRepository, DistilleryRepository, NegotiantRepository, TastingRepository
+from .repositories import WhiskyRepository, DistilleryRepository, NegociantRepository, TastingRepository
 
 class WhiskyService:
     """Service pour les opérations complexes sur les whiskies."""
@@ -20,16 +20,16 @@ class WhiskyService:
 
         whisky_dict = whisky.to_dict()
         whisky_dict.pop('distillery_id', None)
-        whisky_dict.pop('negotiant_id', None)
+        whisky_dict.pop('negociant_id', None)
 
         distillery = DistilleryRepository.get_by_id(whisky.distillery_id)
         if distillery:
             whisky_dict['distillery'] = distillery.to_dict()
 
-        if whisky.negotiant_id:
-            negotiant = NegotiantRepository.get_by_id(whisky.negotiant_id)
-            if negotiant:
-                whisky_dict['negotiant'] = negotiant.to_dict()
+        if whisky.negociant_id:
+            negociant = NegociantRepository.get_by_id(whisky.negociant_id)
+            if negociant:
+                whisky_dict['negociant'] = negociant.to_dict()
 
         tastings = TastingRepository.get_all()
         whisky_dict['tastings'] = [tasting.to_dict() for tasting in tastings if tasting.whisky_id == whisky_id]
