@@ -7,9 +7,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Distillerie: typeof import('./components/Distillerie.vue')['default']
+    DistilleryForm: typeof import('./components/DistilleryForm.vue')['default']
     NavBar: typeof import('./components/NavBar.vue')['default']
+    Negociant: typeof import('./components/Negociant.vue')['default']
+    NegotiantForm: typeof import('./components/NegotiantForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Whisky: typeof import('./components/Whisky.vue')['default']
+    WhiskyForm: typeof import('./components/WhiskyForm.vue')['default']
     WhiskyList: typeof import('./components/WhiskyList.vue')['default']
   }
 }

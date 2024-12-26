@@ -9,7 +9,6 @@ import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
 import './styles/main.scss'
 
-
 const app = createApp(App)
 
 app.use(createPinia())

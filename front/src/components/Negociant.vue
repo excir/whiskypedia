@@ -1,0 +1,30 @@
+<template>
+  <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
+    <div class="p-4">
+      <h1 class="text-2xl font-bold text-gray-900">{{ negociant.name }}</h1>
+      <p class="mt-2 text-gray-600" v-if="negociant.country">
+        Country: {{ negociant.country }}
+      </p>
+      <p class="mt-2 text-gray-600" v-if="negociant.notes">
+        Notes: {{ negociant.notes }}
+      </p>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, type PropType } from 'vue'
+import type { Negotiant } from '@/types'
+
+export default defineComponent({
+  name: 'Negociant',
+  props: {
+    negociant: {
+      type: Object as PropType<Negotiant>,
+      required: true,
+    },
+  },
+})
+</script>
+
+<style scoped></style>
