@@ -1,9 +1,11 @@
+"""Modèles de la base de données pour l'application."""
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
 from app import db
 from .dict_extension import DictExtension
 
 class Distillery(db.Model, DictExtension):
+    """Modèle représentant une distillerie."""
+
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(100), nullable=False)
     country = db.Column(db.String(50), nullable=False)
@@ -12,6 +14,8 @@ class Distillery(db.Model, DictExtension):
     whiskies = db.relationship('Whisky', backref='distillery', lazy=True)
 
 class Negotiant(db.Model, DictExtension):
+    """Modèle représentant un négociant."""
+
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(100), nullable=False)
     country = db.Column(db.String(50), nullable=True)
@@ -20,6 +24,8 @@ class Negotiant(db.Model, DictExtension):
     whiskies = db.relationship('Whisky', backref='negotiant', lazy=True)
 
 class Whisky(db.Model, DictExtension):
+    """Modèle représentant un whisky."""
+
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(100), nullable=False)
     distillery_id = db.Column(db.String, db.ForeignKey('distillery.id'), nullable=False)
@@ -38,6 +44,8 @@ class Whisky(db.Model, DictExtension):
     tastings = db.relationship('Tasting', backref='whisky', lazy=True)
 
 class Tasting(db.Model, DictExtension):
+    """Modèle représentant une dégustation."""
+
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     whisky_id = db.Column(db.String, db.ForeignKey('whisky.id'), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
