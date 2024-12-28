@@ -11,12 +11,31 @@
             size="small"
             @click="editNegociant(item.id)"
           />
-          <v-btn icon="mdi-delete" size="small" color="error" @click="" />
+          <v-btn
+            icon="mdi-delete"
+            size="small"
+            color="error"
+            @click="confirmDelete(item)"
+          />
         </template>
       </v-data-table>
 
       <v-dialog v-model="deleteDialog" max-width="400">
-        <!-- Dialog content -->
+        <v-card>
+          <v-card-title class="headline">Confirmer la suppression</v-card-title>
+          <v-card-text
+            >Êtes-vous sûr de vouloir supprimer ce négociant ?</v-card-text
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" boolean @click="deleteDialog = false"
+              >Annuler</v-btn
+            >
+            <v-btn color="blue darken-1" boolean @click="deleteNegociant"
+              >Confirmer</v-btn
+            >
+          </v-card-actions>
+        </v-card>
       </v-dialog>
     </v-container>
   </div>
@@ -41,10 +60,18 @@ const headers = [
   { title: 'Actions', key: 'actions' },
 ]
 
-// const confirmDelete = (negociant: Negociant) => {
-//   negociantToDelete.value = negociant
-//   deleteDialog.value = true
-// }
+const confirmDelete = (negociant: Negociant) => {
+  negociantToDelete.value = negociant
+  deleteDialog.value = true
+}
+
+const deleteNegociant = async () => {
+  if (negociantToDelete.value?.id) {
+    await negociantStore.deleteNegociant(negociantToDelete.value.id)
+    deleteDialog.value = false
+    negociantToDelete.value = null
+  }
+}
 
 const createNegociant = () => {
   router.push({ name: '/NegociantEdit' })

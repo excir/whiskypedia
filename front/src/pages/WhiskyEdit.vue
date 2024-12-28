@@ -19,12 +19,14 @@ import { useDistillerieStore } from '@/stores/distillerie'
 import { useNegociantStore } from '@/stores/negociant'
 import WhiskyForm from '@/components/WhiskyForm.vue'
 import { type Whisky, type Distillery, type Negociant } from '@/types'
+import { useImages } from '@/stores/images'
 
 const route = useRoute()
 const router = useRouter()
 const whiskyStore = useWhiskyStore()
 const distillerieStore = useDistillerieStore()
 const negociantStore = useNegociantStore()
+const imagesStore = useImages()
 const whisky: Ref<Whisky | null> = ref(null)
 const distilleries: Ref<Distillery[] | null> = ref([])
 const negociants: Ref<Negociant[] | null> = ref([])
@@ -56,9 +58,16 @@ onMounted(async () => {
   }
 })
 
-const handleSubmit = async (whiskyData: Whisky) => {
+const handleSubmit = async (whiskyData: Whisky, imageFile: File | null) => {
+  console.log(whiskyData, imageFile)
   if (whiskyData.negociant_id === '') {
     whiskyData.negociant_id = undefined
+  }
+  if (imageFile) {
+    const extenstion = imageFile.name.split('.').pop()
+    const filename = `${whiskyData.name.replace(/\s+/g, '_').toLowerCase()}.${extenstion}`
+    const name = await imagesStore.uploadImage(imageFile, filename)
+    whiskyData.photo = name
   }
   if (isEditMode.value) {
     if (whisky.value === null || whisky.value.id === undefined) {

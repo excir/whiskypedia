@@ -15,12 +15,31 @@
             size="small"
             @click="editDistillerie(item.id)"
           />
-          <v-btn icon="mdi-delete" size="small" color="error" @click="" />
+          <v-btn
+            icon="mdi-delete"
+            size="small"
+            color="error"
+            @click="confirmDelete(item)"
+          />
         </template>
       </v-data-table>
 
       <v-dialog v-model="deleteDialog" max-width="400">
-        <!-- Dialog content -->
+        <v-card>
+          <v-card-title class="headline">Confirmer la suppression</v-card-title>
+          <v-card-text
+            >Êtes-vous sûr de vouloir supprimer cette distillerie ?</v-card-text
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" boolean @click="deleteDialog = false"
+              >Annuler</v-btn
+            >
+            <v-btn color="blue darken-1" boolean @click="deleteDistillerie"
+              >Confirmer</v-btn
+            >
+          </v-card-actions>
+        </v-card>
       </v-dialog>
     </v-container>
   </div>
@@ -45,10 +64,18 @@ const headers = [
   { title: 'Actions', key: 'actions' },
 ]
 
-// const confirmDelete = (distillerie: Distillery) => {
-//   distillerieToDelete.value = distillerie
-//   deleteDialog.value = true
-// }
+const confirmDelete = (distillerie: Distillery) => {
+  distillerieToDelete.value = distillerie
+  deleteDialog.value = true
+}
+
+const deleteDistillerie = async () => {
+  if (distillerieToDelete.value?.id) {
+    await distillerieStore.deleteDistillerie(distillerieToDelete.value.id)
+    deleteDialog.value = false
+    distillerieToDelete.value = null
+  }
+}
 
 const openDistillerie = (id?: string) => {
   console.log(id)

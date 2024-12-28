@@ -3,11 +3,7 @@
     <h1 class="text-2xl font-bold">Whisky</h1>
     <v-btn @click="createWhisky">Créer un Whisky</v-btn>
     <v-container>
-      <v-data-table
-        :headers="headers"
-        :items="whiskiesWithRatings"
-        :loading="loading"
-      >
+      <v-data-table :headers="headers" :items="whiskiesWithRatings">
         <template #item.averageRating="{ item }">
           <v-rating
             half-increments
@@ -22,12 +18,31 @@
         <template #item.actions="{ item }">
           <v-btn icon="mdi-eye" size="small" @click="openWhisky(item.id)" />
           <v-btn icon="mdi-pencil" size="small" @click="editWhisky(item.id)" />
-          <v-btn icon="mdi-delete" size="small" color="error" @click="" />
+          <v-btn
+            icon="mdi-delete"
+            size="small"
+            color="error"
+            @click="confirmDelete(item)"
+          />
         </template>
       </v-data-table>
 
       <v-dialog v-model="deleteDialog" max-width="400">
-        <!-- Dialog content -->
+        <v-card>
+          <v-card-title class="headline">Confirmer la suppression</v-card-title>
+          <v-card-text
+            >Êtes-vous sûr de vouloir supprimer ce whisky ?</v-card-text
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" boolean @click="deleteDialog = false"
+              >Annuler</v-btn
+            >
+            <v-btn color="blue darken-1" boolean @click="deleteWhisky"
+              >Confirmer</v-btn
+            >
+          </v-card-actions>
+        </v-card>
       </v-dialog>
     </v-container>
   </div>
@@ -35,14 +50,13 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, computed } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useWhiskyStore } from '@/stores/whisky'
 import type { Whisky } from '@/types'
 
 const whiskyStore = useWhiskyStore()
-const deleteDialog = ref(false)
+const whiskies = ref<Whisky[]>([])
+const deleteDialog: Ref<boolean> = ref(false)
 const whiskyToDelete = ref<Whisky | null>(null)
-const { whiskies, loading } = storeToRefs(whiskyStore)
 const router = useRouter()
 
 const whiskiesWithRatings = computed(() => {
@@ -68,10 +82,19 @@ const headers = [
   { title: 'Actions', key: 'actions' },
 ]
 
-// const confirmDelete = (whisky: Whisky) => {
-//   whiskyToDelete.value = whisky
-//   deleteDialog.value = true
-// }
+const confirmDelete = (whisky: Whisky) => {
+  whiskyToDelete.value = whisky
+  deleteDialog.value = true
+}
+
+const deleteWhisky = async () => {
+  if (whiskyToDelete.value?.id) {
+    await whiskyStore.deleteWhisky(whiskyToDelete.value.id)
+    deleteDialog.value = false
+    whiskyToDelete.value = null
+    whiskies.value = await whiskyStore.fetchWhiskies()
+  }
+}
 
 const createWhisky = () => {
   router.push({ name: '/WhiskyEdit' })
@@ -86,6 +109,7 @@ const openWhisky = (id?: string) => {
 }
 
 onMounted(async () => {
-  await whiskyStore.fetchWhiskies()
+  whiskies.value = await whiskyStore.fetchWhiskies()
+  console.log(whiskies.value)
 })
 </script>

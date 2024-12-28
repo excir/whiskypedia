@@ -1,11 +1,17 @@
 """Routes de l'API pour les entités."""
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_file
 from datetime import datetime
 from .models import Whisky, Distillery, Tasting, Negociant
 from .repositories import DistilleryRepository, NegociantRepository, WhiskyRepository, TastingRepository
 from .services import WhiskyService
+import os
+from PIL import Image
+from flask import current_app as app
 
 api = Blueprint('v1', __name__)
+UPLOAD_FOLDER = 'images'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 @api.route('/api/distilleries', methods=['GET'])
 def get_distilleries():
@@ -83,6 +89,7 @@ def get_whisky_details(whisky_id):
 def add_whisky():
     """Ajoute un nouveau whisky."""
     data = request.json
+    print(data)
     whisky = Whisky(**data)
     WhiskyRepository.add(whisky)
     return jsonify(whisky.to_dict()), 201
@@ -202,3 +209,28 @@ def delete_negociant(negociant_id):
         NegociantRepository.delete(negociant)
         return jsonify({'message': 'Negociant deleted'})
     return jsonify({'error': 'Negociant not found'}), 404
+
+
+@api.route('/api/upload_image/<filename>', methods=['POST'])
+def upload_image(filename):
+    """Upload an image and save it to the images folder."""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+    
+    if not file.filename.lower().endswith('.webp'):
+        image = Image.open(file)
+        filename = os.path.splitext(filename)[0] + '.webp'
+        image.save(os.path.join(UPLOAD_FOLDER, filename), 'webp')
+    else:
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+    
+    return jsonify({'message': 'File uploaded successfully', 'filename' : filename}), 201
+
+@api.route('/api/download_image/<filename>', methods=['GET'])
+def download_image(filename):
+    """Download an image from the images folder."""
+    file_path = os.path.join(app.root_path, "..", UPLOAD_FOLDER, filename)
+    return send_file(file_path)

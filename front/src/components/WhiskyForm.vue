@@ -136,11 +136,14 @@
       ></textarea>
     </div>
     <div class="flex flex-col">
-      <label for="photo" class="mb-1 font-semibold">Photo</label>
+      <label for="photo_file" class="mb-1 font-semibold"
+        >Sélectionner une image</label
+      >
       <input
-        v-model="whisky.photo"
-        id="photo"
-        type="text"
+        @change="handleFileChange"
+        id="photo_file"
+        type="file"
+        accept="image/*"
         class="rounded border p-2"
       />
     </div>
@@ -157,8 +160,11 @@
 import { WHISKY_TYPES } from '@/constants/whisky-types'
 import type { Distillery, Negociant, Whisky } from '@/types'
 import { type PropType, defineProps } from 'vue'
+import { ref } from 'vue'
 
-const emit = defineEmits()
+const emit = defineEmits<{
+  (e: 'submit', whisky: Whisky, file: File | null): void
+}>()
 
 const props = defineProps({
   whisky: {
@@ -175,7 +181,16 @@ const props = defineProps({
   },
 })
 
+const selectedFile = ref<File | null>(null)
+
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (target.files && target.files.length > 0) {
+    selectedFile.value = target.files[0]
+  }
+}
+
 const handleSubmit = () => {
-  emit('submit', props.whisky)
+  emit('submit', props.whisky, selectedFile.value)
 }
 </script>

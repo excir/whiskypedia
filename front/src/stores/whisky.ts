@@ -5,52 +5,40 @@ import type { Whisky } from '@/types'
 
 const API_BASE = '/back'
 
-interface WhiskyState {
-  whiskies: Whisky[]
-  currentWhisky: Whisky | null
-  loading: boolean
-  error: string | null
-}
-
 export const useWhiskyStore = defineStore('whisky', {
-  state: (): WhiskyState => ({
-    whiskies: [],
-    currentWhisky: null,
-    loading: false,
-    error: null,
-  }),
+  state: () => ({}),
 
   actions: {
-    async fetchWhiskies(): Promise<void> {
+    async fetchWhiskies(): Promise<Whisky[]> {
       try {
         const response = await axios.get<Whisky[]>(`${API_BASE}/whiskies`)
-        this.whiskies = response.data
+        return response.data
       } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Unknown error'
+        console.error(error instanceof Error ? error.message : 'Unknown error')
+        return []
       }
     },
 
     async fetchWhisky(id: string): Promise<Whisky | null> {
       try {
         const response = await axios.get<Whisky>(`${API_BASE}/whiskies/${id}`)
-        this.currentWhisky = response.data
         return response.data
       } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Unknown error'
+        console.error(error instanceof Error ? error.message : 'Unknown error')
         return null
       }
     },
 
     async createWhisky(whiskyData: Partial<Whisky>): Promise<Whisky> {
+      console.log('createWhisky', whiskyData)
       try {
         const response = await axios.post<Whisky>(
           `${API_BASE}/whiskies`,
           whiskyData
         )
-        this.whiskies.push(response.data)
         return response.data
       } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Unknown error'
+        console.error(error instanceof Error ? error.message : 'Unknown error')
         throw error
       }
     },
@@ -62,7 +50,7 @@ export const useWhiskyStore = defineStore('whisky', {
         )
         return response.data
       } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Unknown error'
+        console.error(error instanceof Error ? error.message : 'Unknown error')
         return null
       }
     },
@@ -76,13 +64,9 @@ export const useWhiskyStore = defineStore('whisky', {
           `${API_BASE}/whiskies/${id}`,
           whiskyData
         )
-        const index = this.whiskies.findIndex((whisky) => whisky.id === id)
-        if (index !== -1) {
-          this.whiskies[index] = response.data
-        }
         return response.data
       } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Unknown error'
+        console.error(error instanceof Error ? error.message : 'Unknown error')
         throw error
       }
     },
@@ -90,9 +74,8 @@ export const useWhiskyStore = defineStore('whisky', {
     async deleteWhisky(id: string): Promise<void> {
       try {
         await axios.delete(`${API_BASE}/whiskies/${id}`)
-        this.whiskies = this.whiskies.filter((whisky) => whisky.id !== id)
       } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Unknown error'
+        console.error(error instanceof Error ? error.message : 'Unknown error')
         throw error
       }
     },

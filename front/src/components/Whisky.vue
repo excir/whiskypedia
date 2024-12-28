@@ -1,9 +1,11 @@
 <template>
   <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
-    <div
-      class="h-56 bg-cover bg-center p-4"
-      :style="{ backgroundImage: `url(${whisky.photo})` }"
-    ></div>
+    <div class="relative h-56" v-if="imageUrl">
+      <img
+        :src="imageUrl"
+        class="absolute inset-0 h-full w-full object-contain"
+      />
+    </div>
     <div class="p-4">
       <h1 class="text-2xl font-bold text-gray-900">{{ whisky.name }}</h1>
       <p class="mt-2 text-gray-600">{{ whisky.whisky_type }}</p>
@@ -45,6 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType, computed } from 'vue'
+import { useImages } from '@/stores/images'
 import type { Whisky } from '@/types'
 
 export default defineComponent({
@@ -56,6 +59,9 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { getImageUrl } = useImages()
+    const imageUrl = computed(() => getImageUrl(props.whisky.photo))
+
     const averageRating = computed(() => {
       if (!props.whisky.tastings || props.whisky.tastings.length === 0) {
         return null
@@ -69,6 +75,7 @@ export default defineComponent({
 
     return {
       averageRating,
+      imageUrl,
     }
   },
 })
