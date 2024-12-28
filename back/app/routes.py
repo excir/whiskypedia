@@ -1,5 +1,6 @@
 """Routes de l'API pour les entités."""
 from flask import Blueprint, jsonify, request
+from datetime import datetime
 from .models import Whisky, Distillery, Tasting, Negociant
 from .repositories import DistilleryRepository, NegociantRepository, WhiskyRepository, TastingRepository
 from .services import WhiskyService
@@ -55,8 +56,6 @@ def delete_distillery(distillery_id):
         DistilleryRepository.delete(distillery)
         return jsonify({'message': 'Distillery deleted'})
     return jsonify({'error': 'Distillery not found'}), 404
-
-# Similar routes for Negociant, Whisky, and Tasting can be created following the same pattern
 
 @api.route('/api/whiskies', methods=['GET'])
 def get_whiskies():
@@ -128,7 +127,8 @@ def add_tasting():
     """Ajoute une nouvelle dégustation."""
     data = request.json
     tasting = Tasting(**data)
-    TastingRepository.add(tasting)
+    tasting.tasting_date = datetime.strptime(tasting.tasting_date, "%Y-%m-%dT%H:%M:%S.%fZ")
+    tasting = TastingRepository.add(tasting)
     return jsonify(tasting.to_dict()), 201
 
 @api.route('/api/tastings/<tasting_id>', methods=['PUT'])

@@ -41,7 +41,7 @@
 
 <script lang="ts" setup>
 import type { Negociant } from '@/types'
-import { type PropType, defineProps, defineEmits } from 'vue'
+import { type PropType, defineProps } from 'vue'
 
 const emit = defineEmits()
 

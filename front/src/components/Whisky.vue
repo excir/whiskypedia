@@ -27,12 +27,24 @@
       <p class="mt-2 text-gray-600" v-if="whisky.finish">
         Finish: {{ whisky.finish }}
       </p>
+      <p class="mt-2 text-gray-600" v-if="averageRating !== null">
+        Note moyenne:
+        <v-rating
+          half-increments
+          :length="5"
+          :size="28"
+          color="warning"
+          active-color="warning"
+          :model-value="averageRating / 2"
+          readonly
+        />
+      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, type PropType, computed } from 'vue'
 import type { Whisky } from '@/types'
 
 export default defineComponent({
@@ -42,6 +54,22 @@ export default defineComponent({
       type: Object as PropType<Whisky>,
       required: true,
     },
+  },
+  setup(props) {
+    const averageRating = computed(() => {
+      if (!props.whisky.tastings || props.whisky.tastings.length === 0) {
+        return null
+      }
+      const total = props.whisky.tastings.reduce(
+        (sum, tasting) => sum + tasting.rating,
+        0
+      )
+      return total / props.whisky.tastings.length
+    })
+
+    return {
+      averageRating,
+    }
   },
 })
 </script>

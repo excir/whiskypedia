@@ -39,5 +39,5 @@ export interface Tasting {
   id?: string
   whisky_id: string
   rating: number
-  tasting_date: string
+  tasting_date: Date
 }

@@ -107,10 +107,13 @@ class TastingRepository:
         return Tasting.query.get(tasting_id)
 
     @staticmethod
-    def add(tasting: Tasting) -> None:
+    def add(tasting: Tasting) -> Tasting:
         """Ajoute une nouvelle dégustation."""
         db.session.add(tasting)
         db.session.commit()
+        db.session.refresh(tasting)
+        return tasting
+
 
     @staticmethod
     def update() -> None:

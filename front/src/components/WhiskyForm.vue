@@ -61,13 +61,15 @@
     </div>
     <div class="flex flex-col">
       <label for="whisky_type" class="mb-1 font-semibold">Type de whisky</label>
-      <input
+      <select
         v-model="whisky.whisky_type"
         id="whisky_type"
-        type="text"
-        required
         class="rounded border p-2"
-      />
+      >
+        <option v-for="types in WHISKY_TYPES" :key="types" :value="types">
+          {{ types }}
+        </option>
+      </select>
     </div>
     <div class="flex flex-col">
       <label for="bottle_size_cl" class="mb-1 font-semibold"
@@ -152,8 +154,9 @@
 </template>
 
 <script lang="ts" setup>
+import { WHISKY_TYPES } from '@/constants/whisky-types'
 import type { Distillery, Negociant, Whisky } from '@/types'
-import { type PropType, defineProps, defineEmits } from 'vue'
+import { type PropType, defineProps } from 'vue'
 
 const emit = defineEmits()
 
