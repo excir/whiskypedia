@@ -51,7 +51,7 @@
 import type { Distillery, Library } from '@/types'
 import { type PropType, defineProps } from 'vue'
 
-const emit =  defineEmits<{
+const emit = defineEmits<{
   (e: 'submit', distillery: Distillery): void
 }>()
 

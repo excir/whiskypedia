@@ -16,7 +16,7 @@ export function useImages() {
 
     if (!response.ok) {
       const error = await response.json()
-      addNotification('Erreur !', 'error');
+      addNotification('Erreur !', 'error')
       throw new Error(error.error)
     }
 
@@ -30,8 +30,8 @@ export function useImages() {
     })
 
     if (!response.ok) {
-      addNotification('Erreur !', 'error');
-      throw new Error('Failed to download image')      
+      addNotification('Erreur !', 'error')
+      throw new Error('Failed to download image')
     }
 
     return await response.blob()

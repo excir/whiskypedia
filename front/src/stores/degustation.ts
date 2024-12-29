@@ -8,7 +8,6 @@ import { useNotification } from '@/services/notification-services'
 const API_BASE = '/back'
 const { addNotification } = useNotification()
 
-
 interface TastingState {
   tastings: Tasting[]
   loading: boolean
@@ -30,11 +29,11 @@ export const useTastingStore = defineStore('tasting', {
           tastingData
         )
         this.tastings.push(response.data)
-        addNotification('Degustation ajouté', 'success');
+        addNotification('Degustation ajouté', 'success')
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },
@@ -43,10 +42,10 @@ export const useTastingStore = defineStore('tasting', {
       try {
         await axios.delete(`${API_BASE}/tastings/${id}`)
         this.tastings = this.tastings.filter((tasting) => tasting.id !== id)
-        addNotification('Degustation supprimé', 'success');
+        addNotification('Degustation supprimé', 'success')
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },

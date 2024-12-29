@@ -43,7 +43,7 @@ class Whisky(db.Model, DictExtension):
     finish = db.Column(db.Text, nullable=True)
     photo = db.Column(db.String, nullable=True)
 
-    tastings = db.relationship('Tasting', backref='whisky', lazy=True)
+    tastings = db.relationship('Tasting', backref='whisky', lazy=True, cascade='all, delete-orphan')
     whisky_type = db.relationship('Library', foreign_keys=[whisky_type_id])
 
 class Tasting(db.Model, DictExtension):

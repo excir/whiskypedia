@@ -12,11 +12,11 @@
       <p class="mt-2 text-gray-600">
         Distillerie: {{ whisky.distillery?.name }}
       </p>
-      <p class="mt-2 text-gray-600">
-        Alcool: {{ whisky.alcohol_percentage }}%
-      </p>
+      <p class="mt-2 text-gray-600">Alcool: {{ whisky.alcohol_percentage }}%</p>
       <p class="mt-2 text-gray-600">Prix: {{ whisky.price }}€</p>
-      <p class="mt-2 text-gray-600" >{{whisky.is_peated ? 'Tourbé' : 'Non tourbé'}}</p>
+      <p class="mt-2 text-gray-600">
+        {{ whisky.is_peated ? 'Tourbé' : 'Non tourbé' }}
+      </p>
       <p class="mt-2 text-gray-600" v-if="whisky.nose">
         Nez: {{ whisky.nose }}
       </p>

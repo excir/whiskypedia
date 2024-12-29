@@ -31,7 +31,7 @@ export const useDistillerieStore = defineStore('distillerie', {
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         return null
       }
     },
@@ -45,7 +45,7 @@ export const useDistillerieStore = defineStore('distillerie', {
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         return null
       }
     },
@@ -59,11 +59,11 @@ export const useDistillerieStore = defineStore('distillerie', {
           distillerieData
         )
         this.distilleries.push(response.data)
-        addNotification('Distillerie ajouté', 'success');
+        addNotification('Distillerie ajouté', 'success')
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },
@@ -84,11 +84,11 @@ export const useDistillerieStore = defineStore('distillerie', {
         if (index !== -1) {
           this.distilleries[index] = response.data
         }
-        addNotification('Distillerie mise a jour', 'success');
+        addNotification('Distillerie mise a jour', 'success')
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },
@@ -99,10 +99,10 @@ export const useDistillerieStore = defineStore('distillerie', {
         this.distilleries = this.distilleries.filter(
           (distillerie) => distillerie.id !== id
         )
-        addNotification('Distillerie supprimée', 'success');
+        addNotification('Distillerie supprimée', 'success')
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },

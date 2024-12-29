@@ -29,7 +29,7 @@ export const useNegociantStore = defineStore('negociant', {
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         return null
       }
     },
@@ -43,7 +43,7 @@ export const useNegociantStore = defineStore('negociant', {
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         return null
       }
     },
@@ -57,11 +57,11 @@ export const useNegociantStore = defineStore('negociant', {
           negociantData
         )
         this.negociants.push(response.data)
-        addNotification('Negociant ajouté', 'success');
+        addNotification('Negociant ajouté', 'success')
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },
@@ -82,11 +82,11 @@ export const useNegociantStore = defineStore('negociant', {
         if (index !== undefined) {
           this.negociants[index] = response.data
         }
-        addNotification('Negociant modifié', 'success');
+        addNotification('Negociant modifié', 'success')
         return response.data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },
@@ -97,10 +97,10 @@ export const useNegociantStore = defineStore('negociant', {
         this.negociants = this.negociants.filter(
           (negociant) => negociant.id !== id
         )
-        addNotification('Negociant supprimé', 'success');
+        addNotification('Negociant supprimé', 'success')
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Unknown error'
-        addNotification('Erreur !', 'error');
+        addNotification('Erreur !', 'error')
         throw error
       }
     },

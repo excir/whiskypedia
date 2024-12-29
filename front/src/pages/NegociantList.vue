@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold">Négociant</h1>
-    <v-btn @click="createNegociant">Créer un Négociant</v-btn>
     <v-container>
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-bold">Négociant</h1>
+        <v-btn @click="createNegociant">Créer un Négociant</v-btn>
+      </div>
       <v-data-table :headers="headers" :items="negociants" :loading="loading">
         <template #item.actions="{ item }">
           <v-btn icon="mdi-eye" size="small" @click="openNegociant(item.id)" />

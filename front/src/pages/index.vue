@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold">Whisky</h1>
-    <v-btn @click="createWhisky">Créer un Whisky</v-btn>
     <v-container>
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-bold">Whisky</h1>
+        <v-btn @click="createWhisky">Créer un Whisky</v-btn>
+      </div>
       <v-data-table :headers="headers" :items="whiskiesWithRatings">
         <template #item.averageRating="{ item }">
           <v-rating

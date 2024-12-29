@@ -2,7 +2,7 @@
   <v-card class="my-4 p-4">
     <v-card-title class="text-xl font-bold">
       Dégustation
-      <v-btn icon @click="$emit('delete-tasting', tasting.id)">
+      <v-btn icon color="error" @click="$emit('delete-tasting', tasting.id)">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </v-card-title>

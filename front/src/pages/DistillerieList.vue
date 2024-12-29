@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold">Distillerie</h1>
-    <v-btn @click="createDistillerie">Créer une Distillerie</v-btn>
     <v-container>
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-bold">Distillerie</h1>
+        <v-btn @click="createDistillerie">Créer une Distillerie</v-btn>
+      </div>
       <v-data-table :headers="headers" :items="distilleries" :loading="loading">
         <template #item.actions="{ item }">
           <v-btn

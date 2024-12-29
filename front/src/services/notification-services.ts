@@ -8,14 +8,19 @@ interface Notification {
 
 const notifications = ref<Notification[]>([])
 
-const addNotification = (message: string, type: 'success' | 'error' | 'info') => {
+const addNotification = (
+  message: string,
+  type: 'success' | 'error' | 'info'
+) => {
   const id = Date.now()
   notifications.value.push({ id, message, type })
   setTimeout(() => removeNotification(id), 5000)
 }
 
 const removeNotification = (id: number) => {
-  notifications.value = notifications.value.filter(notification => notification.id !== id)
+  notifications.value = notifications.value.filter(
+    (notification) => notification.id !== id
+  )
 }
 
 export const useNotification = () => {

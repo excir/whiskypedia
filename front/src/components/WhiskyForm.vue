@@ -60,7 +60,9 @@
       />
     </div>
     <div class="flex flex-col">
-      <label for="whisky_type_id" class="mb-1 font-semibold">Type de whisky</label>
+      <label for="whisky_type_id" class="mb-1 font-semibold"
+        >Type de whisky</label
+      >
       <select
         v-model="whisky.whisky_type_id"
         id="whisky_type_id"
