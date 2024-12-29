@@ -60,14 +60,14 @@
       />
     </div>
     <div class="flex flex-col">
-      <label for="whisky_type" class="mb-1 font-semibold">Type de whisky</label>
+      <label for="whisky_type_id" class="mb-1 font-semibold">Type de whisky</label>
       <select
-        v-model="whisky.whisky_type"
-        id="whisky_type"
+        v-model="whisky.whisky_type_id"
+        id="whisky_type_id"
         class="rounded border p-2"
       >
-        <option v-for="types in WHISKY_TYPES" :key="types" :value="types">
-          {{ types }}
+        <option v-for="type in whiskyTypes" :key="type.id" :value="type.id">
+          {{ type.data }}
         </option>
       </select>
     </div>
@@ -157,8 +157,7 @@
 </template>
 
 <script lang="ts" setup>
-import { WHISKY_TYPES } from '@/constants/whisky-types'
-import type { Distillery, Negociant, Whisky } from '@/types'
+import type { Distillery, Negociant, Whisky, Library } from '@/types'
 import { type PropType, defineProps } from 'vue'
 import { ref } from 'vue'
 
@@ -177,6 +176,14 @@ const props = defineProps({
   },
   negociants: {
     type: Array as PropType<Negociant[]>,
+    required: true,
+  },
+  whiskyTypes: {
+    type: Array as PropType<Library[]>,
+    required: true,
+  },
+  countries: {
+    type: Array as PropType<Library[]>,
     required: true,
   },
 })

@@ -59,7 +59,7 @@ const router = useRouter()
 
 const headers = [
   { title: 'Nom', key: 'name' },
-  { title: 'Pays', key: 'country' },
+  { title: 'Pays', key: 'country.data' },
   { title: 'Nb. de Whiskies', key: 'whiskies.length' },
   { title: 'Actions', key: 'actions' },
 ]

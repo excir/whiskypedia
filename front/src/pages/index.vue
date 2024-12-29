@@ -76,8 +76,8 @@ const whiskiesWithRatings = computed(() => {
 const headers = [
   { title: 'Nom', key: 'name' },
   { title: 'Distillerie', key: 'distillery.name' },
-  { title: 'Pays', key: 'distillery.country' },
-  { title: 'Type', key: 'whisky_type' },
+  { title: 'Pays', key: 'distillery.country.data' },
+  { title: 'Type', key: 'whisky_type.data' },
   { title: 'Note Moyenne', key: 'averageRating' },
   { title: 'Actions', key: 'actions' },
 ]
@@ -110,6 +110,5 @@ const openWhisky = (id?: string) => {
 
 onMounted(async () => {
   whiskies.value = await whiskyStore.fetchWhiskies()
-  console.log(whiskies.value)
 })
 </script>

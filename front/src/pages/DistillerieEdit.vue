@@ -4,8 +4,9 @@
       {{ isEditMode ? 'Modifier la Distillerie' : 'Créer une Distillerie' }}
     </h1>
     <DistilleryForm
-      v-if="distillery"
+      v-if="distillery && countries"
       :distillery="distillery"
+      :countries="countries"
       @submit="handleSubmit"
     />
   </div>
@@ -17,12 +18,15 @@ import { useRoute, useRouter } from 'vue-router'
 import { useDistillerieStore } from '@/stores/distillerie'
 import DistilleryForm from '@/components/DistilleryForm.vue'
 import { type Distillery } from '@/types'
+import { useLibraryStore } from '@/stores/library'
 
 const route = useRoute()
 const router = useRouter()
 const distillerieStore = useDistillerieStore()
+const libraryStore = useLibraryStore()
 const distillery: Ref<Distillery | null> = ref(null)
 const isEditMode = ref(false)
+const countries = ref([])
 
 onMounted(async () => {
   const id = route.query.id
@@ -32,10 +36,11 @@ onMounted(async () => {
   } else {
     distillery.value = {
       name: '',
-      country: '',
+      country_id: null,
       notes: '',
     }
   }
+  countries.value = await libraryStore.fetchLibrary('countries')
 })
 
 const handleSubmit = async (distilleryData: Distillery) => {

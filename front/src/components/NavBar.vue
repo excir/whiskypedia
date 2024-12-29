@@ -15,6 +15,9 @@
         <router-link to="/NegociantList" class="text-gray-300 hover:text-white"
           >Négociant</router-link
         >
+        <router-link to="/Libraries" class="text-gray-300 hover:text-white"
+          >Listes</router-link
+        >
       </div>
     </div>
   </nav>

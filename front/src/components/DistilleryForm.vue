@@ -14,14 +14,21 @@
       />
     </div>
     <div class="flex flex-col">
-      <label for="country" class="mb-1 font-semibold">Pays</label>
-      <input
-        v-model="distillery.country"
-        id="country"
-        type="text"
+      <label for="country_id" class="mb-1 font-semibold">Pays</label>
+      <select
+        v-model="distillery.country_id"
+        id="country_id"
         required
         class="rounded border p-2"
-      />
+      >
+        <option
+          v-for="country in countries"
+          :key="country.id"
+          :value="country.id"
+        >
+          {{ country.data }}
+        </option>
+      </select>
     </div>
     <div class="flex flex-col">
       <label for="notes" class="mb-1 font-semibold">Notes</label>
@@ -41,19 +48,26 @@
 </template>
 
 <script lang="ts" setup>
-import type { Distillery } from '@/types'
+import type { Distillery, Library } from '@/types'
 import { type PropType, defineProps } from 'vue'
 
-const emit = defineEmits()
+const emit =  defineEmits<{
+  (e: 'submit', distillery: Distillery): void
+}>()
 
 const props = defineProps({
   distillery: {
     type: Object as PropType<Distillery>,
     required: true,
   },
+  countries: {
+    type: Array as PropType<Library[]>,
+    required: true,
+  },
 })
 
 const handleSubmit = () => {
+  console.log('distillery', props.distillery)
   emit('submit', props.distillery)
 }
 </script>

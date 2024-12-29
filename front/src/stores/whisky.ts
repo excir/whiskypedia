@@ -2,8 +2,10 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { Whisky } from '@/types'
+import { useNotification } from '@/services/notification-services'
 
 const API_BASE = '/back'
+const { addNotification } = useNotification()
 
 export const useWhiskyStore = defineStore('whisky', {
   state: () => ({}),
@@ -15,6 +17,7 @@ export const useWhiskyStore = defineStore('whisky', {
         return response.data
       } catch (error) {
         console.error(error instanceof Error ? error.message : 'Unknown error')
+        addNotification('Erreur !', 'error');
         return []
       }
     },
@@ -25,6 +28,7 @@ export const useWhiskyStore = defineStore('whisky', {
         return response.data
       } catch (error) {
         console.error(error instanceof Error ? error.message : 'Unknown error')
+        addNotification('Erreur !', 'error');
         return null
       }
     },
@@ -36,9 +40,11 @@ export const useWhiskyStore = defineStore('whisky', {
           `${API_BASE}/whiskies`,
           whiskyData
         )
+        addNotification('Whisky ajouté', 'success');
         return response.data
       } catch (error) {
         console.error(error instanceof Error ? error.message : 'Unknown error')
+        addNotification('Erreur !', 'error');
         throw error
       }
     },
@@ -51,6 +57,7 @@ export const useWhiskyStore = defineStore('whisky', {
         return response.data
       } catch (error) {
         console.error(error instanceof Error ? error.message : 'Unknown error')
+        addNotification('Erreur !', 'error');
         return null
       }
     },
@@ -64,9 +71,11 @@ export const useWhiskyStore = defineStore('whisky', {
           `${API_BASE}/whiskies/${id}`,
           whiskyData
         )
+        addNotification('Whisky modifié', 'success');
         return response.data
       } catch (error) {
         console.error(error instanceof Error ? error.message : 'Unknown error')
+        addNotification('Erreur !', 'error');
         throw error
       }
     },
@@ -74,11 +83,12 @@ export const useWhiskyStore = defineStore('whisky', {
     async deleteWhisky(id: string): Promise<void> {
       try {
         await axios.delete(`${API_BASE}/whiskies/${id}`)
+        addNotification('Whisky supprimé', 'success');
       } catch (error) {
         console.error(error instanceof Error ? error.message : 'Unknown error')
+        addNotification('Erreur !', 'error');
         throw error
       }
     },
-    // Autres actions avec types...
   },
 })

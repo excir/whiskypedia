@@ -8,26 +8,26 @@
     </div>
     <div class="p-4">
       <h1 class="text-2xl font-bold text-gray-900">{{ whisky.name }}</h1>
-      <p class="mt-2 text-gray-600">{{ whisky.whisky_type }}</p>
+      <p class="mt-2 text-gray-600">{{ whisky.whisky_type?.data }}</p>
       <p class="mt-2 text-gray-600">
-        Distillery: {{ whisky.distillery?.name }}
+        Distillerie: {{ whisky.distillery?.name }}
       </p>
       <p class="mt-2 text-gray-600">
-        Alcohol: {{ whisky.alcohol_percentage }}%
+        Alcool: {{ whisky.alcohol_percentage }}%
       </p>
-      <p class="mt-2 text-gray-600">Price: ${{ whisky.price }}</p>
-      <p class="mt-2 text-gray-600" v-if="whisky.is_peated">Peated</p>
+      <p class="mt-2 text-gray-600">Prix: {{ whisky.price }}€</p>
+      <p class="mt-2 text-gray-600" >{{whisky.is_peated ? 'Tourbé' : 'Non tourbé'}}</p>
       <p class="mt-2 text-gray-600" v-if="whisky.nose">
-        Nose: {{ whisky.nose }}
+        Nez: {{ whisky.nose }}
       </p>
       <p class="mt-2 text-gray-600" v-if="whisky.appearance">
-        Appearance: {{ whisky.appearance }}
+        Apparence: {{ whisky.appearance }}
       </p>
       <p class="mt-2 text-gray-600" v-if="whisky.palate">
-        Palate: {{ whisky.palate }}
+        Palais: {{ whisky.palate }}
       </p>
       <p class="mt-2 text-gray-600" v-if="whisky.finish">
-        Finish: {{ whisky.finish }}
+        Finale: {{ whisky.finish }}
       </p>
       <p class="mt-2 text-gray-600" v-if="averageRating !== null">
         Note moyenne:

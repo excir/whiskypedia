@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Distillerie: typeof import('./components/Distillerie.vue')['default']
     DistilleryForm: typeof import('./components/DistilleryForm.vue')['default']
+    LibraryList: typeof import('./components/LibraryList.vue')['default']
     NavBar: typeof import('./components/NavBar.vue')['default']
     Negociant: typeof import('./components/Negociant.vue')['default']
     NegociantForm: typeof import('./components/NegociantForm.vue')['default']
@@ -16,6 +17,7 @@ declare module 'vue' {
     Notation: typeof import('./components/Notation.vue')['default']
     NotationForm: typeof import('./components/NotationForm.vue')['default']
     NotationList: typeof import('./components/NotationList.vue')['default']
+    Notification: typeof import('./components/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Whisky: typeof import('./components/Whisky.vue')['default']

@@ -1,7 +1,7 @@
 """Repositories pour les opérations CRUD sur les entités."""
 
 from app import db
-from .models import Distillery, Negociant, Whisky, Tasting
+from .models import Distillery, Negociant, Whisky, Tasting, Library
 
 class DistilleryRepository:
     """Repository pour les opérations CRUD sur les distilleries."""
@@ -125,3 +125,42 @@ class TastingRepository:
         """Supprime une dégustation."""
         db.session.delete(tasting)
         db.session.commit()
+
+class LibraryRepository:
+    """Repository pour les opérations CRUD sur les bibliothèques de données."""
+
+    @staticmethod
+    def get_by_id(library_id: int) -> Library:
+        """Récupère une bibliothèque par son ID."""
+        return Library.query.get(library_id)
+    
+    @staticmethod
+    def get_all() -> list[Library]:
+        """Récupère toutes les bibliothèques."""
+        return Library.query.all()
+
+    @staticmethod
+    def add(library: Library) -> Library:
+        """Ajoute une nouvelle bibliothèque."""
+        db.session.add(library)
+        db.session.commit()
+        db.session.refresh(library)
+        return library
+
+
+    @staticmethod
+    def delete(library: Library) -> None:
+        """Supprime une bibliothèque."""
+        db.session.delete(library)
+        db.session.commit()
+
+    @staticmethod
+    def update(library_id: str, data: dict) -> Library:
+        """Met à jour une bibliothèque existante."""
+        library = Library.query.get(library_id)
+        if library:
+            for key, value in data.items():
+                setattr(library, key, value)
+            db.session.commit()
+            db.session.refresh(library)
+        return library

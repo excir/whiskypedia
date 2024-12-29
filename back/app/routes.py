@@ -1,9 +1,9 @@
 """Routes de l'API pour les entités."""
 from flask import Blueprint, jsonify, request, send_file
 from datetime import datetime
-from .models import Whisky, Distillery, Tasting, Negociant
-from .repositories import DistilleryRepository, NegociantRepository, WhiskyRepository, TastingRepository
-from .services import WhiskyService
+from .models import Whisky, Distillery, Tasting, Negociant, Library
+from .repositories import DistilleryRepository, NegociantRepository, WhiskyRepository, TastingRepository, LibraryRepository
+from .services import WhiskyService, DistilleryService, NegociantService
 import os
 from PIL import Image
 from flask import current_app as app
@@ -17,22 +17,15 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def get_distilleries():
     """Récupère toutes les distilleries."""
     distilleries = DistilleryRepository.get_all()
-    distilleries_with_whiskies = []
-    for distillery in distilleries:
-        distillery_dict = distillery.to_dict()
-        distillery_dict['whiskies'] = [whisky.to_dict() for whisky in distillery.whiskies]
-        distilleries_with_whiskies.append(distillery_dict)
-    return jsonify(distilleries_with_whiskies)
+    return jsonify([DistilleryService.get_distillery_with_dependencies(distillery.id) for distillery in distilleries])
 
 @api.route('/api/distilleries/<distillery_id>', methods=['GET'])
 def get_distillery(distillery_id):
     """Récupère une distillerie par son ID."""
-    distillery = DistilleryRepository.get_by_id(distillery_id)
-    if distillery:
-        distillery_dict = distillery.to_dict()
-        distillery_dict['whiskies'] = [whisky.to_dict() for whisky in distillery.whiskies]
-        return jsonify(distillery_dict)
-    return jsonify({'error': 'Distillery not found'}), 404
+    distillery_dict = DistilleryService.get_distillery_with_dependencies(distillery_id)
+    if 'error' in distillery_dict:
+        return jsonify(distillery_dict), 404
+    return jsonify(distillery_dict)
 
 @api.route('/api/distilleries', methods=['POST'])
 def add_distillery():
@@ -163,22 +156,15 @@ def delete_tasting(tasting_id):
 def get_negociants():
     """Récupère tous les négociants."""
     negociants = NegociantRepository.get_all()
-    negociants_with_whiskies = []
-    for negociant in negociants:
-        negociant_dict = negociant.to_dict()
-        negociant_dict['whiskies'] = [whisky.to_dict() for whisky in negociant.whiskies]
-        negociants_with_whiskies.append(negociant_dict)
-    return jsonify(negociants_with_whiskies)
+    return jsonify([NegociantService.get_negociant_with_dependencies(negociant.id) for negociant in negociants])
 
 @api.route('/api/negociants/<negociant_id>', methods=['GET'])
 def get_negociant(negociant_id):
     """Récupère un négociant par son ID."""
-    negociant = NegociantRepository.get_by_id(negociant_id)
-    if negociant:
-        negociant_dict = negociant.to_dict()
-        negociant_dict['whiskies'] = [whisky.to_dict() for whisky in negociant.whiskies]
-        return jsonify(negociant_dict)
-    return jsonify({'error': 'Negociant not found'}), 404
+    negociant_dict = NegociantService.get_negociant_with_dependencies(negociant_id)
+    if 'error' in negociant_dict:
+        return jsonify(negociant_dict), 404
+    return jsonify(negociant_dict)
 
 @api.route('/api/negociants', methods=['POST'])
 def add_negociant():
@@ -192,7 +178,6 @@ def add_negociant():
 def update_negociant(negociant_id):
     """Met à jour un négociant existant."""
     data = request.json
-    print(data)
     negociant = NegociantRepository.get_by_id(negociant_id)
     if negociant:
         for key, value in data.items():
@@ -232,5 +217,38 @@ def upload_image(filename):
 @api.route('/api/download_image/<filename>', methods=['GET'])
 def download_image(filename):
     """Download an image from the images folder."""
+    if filename.contains('..') or filename.contains('/'):
+        return jsonify({'error': 'Invalid filename'}), 400
     file_path = os.path.join(app.root_path, "..", UPLOAD_FOLDER, filename)
     return send_file(file_path)
+
+@api.route('/api/library', methods=['POST'])
+def add_library():
+    data = request.json
+    library = Library(**data)
+    LibraryRepository.add(library)
+    return jsonify(library.to_dict()), 201
+
+@api.route('/api/library', methods=['GET'])
+def get_libraries():
+    """Récupère toutes les bibliothèques."""
+    libraries = LibraryRepository.get_all()
+    return jsonify([library.to_dict() for library in libraries])
+
+@api.route('/api/library/<library_id>', methods=['DELETE'])
+def delete_library(library_id):
+    """Supprime une bibliothèque par son ID."""
+    library = LibraryRepository.get_by_id(library_id)
+    if library:
+        LibraryRepository.delete(library)
+        return jsonify({'message': 'Library deleted'})
+    return jsonify({'error': 'Library not found'}), 404
+
+@api.route('/api/library/<library_id>', methods=['PUT'])
+def update_library(library_id):
+    """Met à jour une bibliothèque par son ID."""
+    data = request.json
+    library = LibraryRepository.update(library_id, data)
+    if library:
+        return jsonify(library.to_dict()), 200
+    return jsonify({'error': 'Library not found'}), 404

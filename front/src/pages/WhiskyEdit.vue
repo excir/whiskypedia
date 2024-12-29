@@ -2,10 +2,12 @@
   <div>
     <h1>{{ isEditMode ? 'Modifier le Whisky' : 'Créer un Whisky' }}</h1>
     <WhiskyForm
-      v-if="whisky && distilleries && negociants"
+      v-if="whisky && distilleries && negociants && whiskyTypes && countries"
       :whisky="whisky"
       :distilleries="distilleries"
       :negociants="negociants"
+      :whisky-types="whiskyTypes"
+      :countries="countries"
       @submit="handleSubmit"
     />
   </div>
@@ -20,6 +22,7 @@ import { useNegociantStore } from '@/stores/negociant'
 import WhiskyForm from '@/components/WhiskyForm.vue'
 import { type Whisky, type Distillery, type Negociant } from '@/types'
 import { useImages } from '@/stores/images'
+import { useLibraryStore } from '@/stores/library'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,15 +30,20 @@ const whiskyStore = useWhiskyStore()
 const distillerieStore = useDistillerieStore()
 const negociantStore = useNegociantStore()
 const imagesStore = useImages()
+const libraryStore = useLibraryStore()
 const whisky: Ref<Whisky | null> = ref(null)
 const distilleries: Ref<Distillery[] | null> = ref([])
 const negociants: Ref<Negociant[] | null> = ref([])
+const whiskyTypes = ref([])
+const countries = ref([])
 const isEditMode = ref(false)
 
 onMounted(async () => {
   const id = route.query.id
   distilleries.value = await distillerieStore.fetchDistilleries()
   negociants.value = await negociantStore.fetchNegociants()
+  whiskyTypes.value = await libraryStore.fetchLibrary('whisky_types')
+  countries.value = await libraryStore.fetchLibrary('countries')
   if (id) {
     isEditMode.value = true
     whisky.value = await whiskyStore.fetchWhisky(id as string)
@@ -45,7 +53,7 @@ onMounted(async () => {
       distillery_id: null,
       negociant_id: null,
       alcohol_percentage: 0,
-      whisky_type: '',
+      whisky_type_id: null,
       bottle_size_cl: 0,
       price: 0,
       is_peated: false,

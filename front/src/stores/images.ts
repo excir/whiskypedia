@@ -1,6 +1,8 @@
 import { fa } from 'vuetify/locale'
+import { useNotification } from '@/services/notification-services'
 
 const API_BASE_URL = '/back'
+const { addNotification } = useNotification()
 
 export function useImages() {
   async function uploadImage(file: File, filename: string): Promise<string> {
@@ -14,6 +16,7 @@ export function useImages() {
 
     if (!response.ok) {
       const error = await response.json()
+      addNotification('Erreur !', 'error');
       throw new Error(error.error)
     }
 
@@ -27,7 +30,8 @@ export function useImages() {
     })
 
     if (!response.ok) {
-      throw new Error('Failed to download image')
+      addNotification('Erreur !', 'error');
+      throw new Error('Failed to download image')      
     }
 
     return await response.blob()
