@@ -7,6 +7,7 @@ from .services import WhiskyService, DistilleryService, NegociantService
 import os
 from PIL import Image
 from flask import current_app as app
+from .services import BackupService
 
 api = Blueprint('v1', __name__)
 UPLOAD_FOLDER = 'images'
@@ -252,3 +253,19 @@ def update_library(library_id):
     if library:
         return jsonify(library.to_dict()), 200
     return jsonify({'error': 'Library not found'}), 404
+
+@api.route('/api/backup', methods=['GET'])
+def backup_data():
+    """Crée une sauvegarde des données et des images."""
+    return BackupService.create_backup()
+
+@api.route('/api/restore', methods=['POST'])
+def restore_data():
+    """Restaure les données et les images à partir d'un fichier zip."""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+    BackupService.restore_backup(file)
+    return jsonify({'message': 'Data restored successfully'}), 201

@@ -18,6 +18,9 @@
         <router-link to="/Libraries" class="text-gray-300 hover:text-white"
           >Listes</router-link
         >
+        <router-link to="/Backup" class="text-gray-300 hover:text-white"
+          >Sauvegardes</router-link
+        >
       </div>
     </div>
   </nav>
