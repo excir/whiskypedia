@@ -5,8 +5,8 @@
   <div>
     <NotationList
       v-if="whisky"
-      :whiskyId="whisky.id"
-      :initialTastings="whisky.tastings"
+      :whisky-id="whisky.id"
+      :initial-tastings="whisky.tastings"
       @update-whisky="updateWhisky"
     />
   </div>

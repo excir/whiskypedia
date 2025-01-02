@@ -1,14 +1,18 @@
 <template>
   <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
-    <div class="relative h-56" v-if="imageUrl">
+    <div v-if="imageUrl" class="relative h-56">
       <img
         :src="imageUrl"
         class="absolute inset-0 h-full w-full object-contain"
       />
     </div>
     <div class="p-4">
-      <h1 class="text-2xl font-bold text-gray-900">{{ whisky.name }}</h1>
-      <p class="mt-2 text-gray-600">{{ whisky.whisky_type?.data }}</p>
+      <h1 class="text-2xl font-bold text-gray-900">
+        {{ whisky.name }}
+      </h1>
+      <p class="mt-2 text-gray-600">
+        {{ whisky.whisky_type?.data }}
+      </p>
       <p class="mt-2 text-gray-600">
         Distillerie: {{ whisky.distillery?.name }}
       </p>
@@ -17,19 +21,19 @@
       <p class="mt-2 text-gray-600">
         {{ whisky.is_peated ? 'Tourbé' : 'Non tourbé' }}
       </p>
-      <p class="mt-2 text-gray-600" v-if="whisky.nose">
+      <p v-if="whisky.nose" class="mt-2 text-gray-600">
         Nez: {{ whisky.nose }}
       </p>
-      <p class="mt-2 text-gray-600" v-if="whisky.appearance">
+      <p v-if="whisky.appearance" class="mt-2 text-gray-600">
         Apparence: {{ whisky.appearance }}
       </p>
-      <p class="mt-2 text-gray-600" v-if="whisky.palate">
+      <p v-if="whisky.palate" class="mt-2 text-gray-600">
         Palais: {{ whisky.palate }}
       </p>
-      <p class="mt-2 text-gray-600" v-if="whisky.finish">
+      <p v-if="whisky.finish" class="mt-2 text-gray-600">
         Finale: {{ whisky.finish }}
       </p>
-      <p class="mt-2 text-gray-600" v-if="averageRating !== null">
+      <p v-if="averageRating !== null" class="mt-2 text-gray-600">
         Note moyenne:
         <v-rating
           half-increments

@@ -2,16 +2,16 @@
   <v-container>
     <v-form @submit.prevent="submitForm">
       <v-rating
+        v-model="tasting.rating"
         half-increments
         hover
         :length="5"
         :size="28"
         color="warning"
         active-color="warning"
-        v-model="tasting.rating"
       />
-      <v-date-picker v-model="tasting.tasting_date"></v-date-picker>
-      <v-btn type="submit" color="primary">Ajouter</v-btn>
+      <v-date-picker v-model="tasting.tasting_date" />
+      <v-btn type="submit" color="primary"> Ajouter </v-btn>
     </v-form>
   </v-container>
 </template>

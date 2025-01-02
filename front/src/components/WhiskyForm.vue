@@ -1,13 +1,13 @@
 <template>
   <form
-    @submit.prevent="handleSubmit"
     class="space-y-4 rounded bg-white p-4 shadow-md"
+    @submit.prevent="handleSubmit"
   >
     <div class="flex flex-col">
       <label for="name" class="mb-1 font-semibold">Nom</label>
       <input
-        v-model="whisky.name"
         id="name"
+        v-model="whisky.name"
         type="text"
         required
         class="rounded border p-2"
@@ -16,8 +16,8 @@
     <div class="flex flex-col">
       <label for="distillery_id" class="mb-1 font-semibold">Distillerie</label>
       <select
-        v-model="whisky.distillery_id"
         id="distillery_id"
+        v-model="whisky.distillery_id"
         required
         class="rounded border p-2"
       >
@@ -33,8 +33,8 @@
     <div class="flex flex-col">
       <label for="negotiant_id" class="mb-1 font-semibold">Négociant</label>
       <select
-        v-model="whisky.negociant_id"
         id="negotiant_id"
+        v-model="whisky.negociant_id"
         class="rounded border p-2"
       >
         <option value="">Aucun</option>
@@ -52,8 +52,8 @@
         >Pourcentage d'alcool</label
       >
       <input
-        v-model="whisky.alcohol_percentage"
         id="alcohol_percentage"
+        v-model="whisky.alcohol_percentage"
         type="number"
         required
         class="rounded border p-2"
@@ -64,8 +64,8 @@
         >Type de whisky</label
       >
       <select
-        v-model="whisky.whisky_type_id"
         id="whisky_type_id"
+        v-model="whisky.whisky_type_id"
         class="rounded border p-2"
       >
         <option v-for="type in whiskyTypes" :key="type.id" :value="type.id">
@@ -78,8 +78,8 @@
         >Taille de la bouteille (cl)</label
       >
       <input
-        v-model="whisky.bottle_size_cl"
         id="bottle_size_cl"
+        v-model="whisky.bottle_size_cl"
         type="number"
         required
         class="rounded border p-2"
@@ -88,8 +88,8 @@
     <div class="flex flex-col">
       <label for="price" class="mb-1 font-semibold">Prix</label>
       <input
-        v-model="whisky.price"
         id="price"
+        v-model="whisky.price"
         type="number"
         step="0.01"
         required
@@ -99,54 +99,50 @@
     <div class="flex items-center">
       <label for="is_peated" class="mr-2 font-semibold">Tourbé</label>
       <input
-        v-model="whisky.is_peated"
         id="is_peated"
+        v-model="whisky.is_peated"
         type="checkbox"
         class="h-5 w-5"
       />
     </div>
     <div class="flex flex-col">
       <label for="nose" class="mb-1 font-semibold">Nez</label>
-      <textarea
-        v-model="whisky.nose"
-        id="nose"
-        class="rounded border p-2"
-      ></textarea>
+      <textarea id="nose" v-model="whisky.nose" class="rounded border p-2" />
     </div>
     <div class="flex flex-col">
       <label for="appearance" class="mb-1 font-semibold">Apparence</label>
       <textarea
-        v-model="whisky.appearance"
         id="appearance"
+        v-model="whisky.appearance"
         class="rounded border p-2"
-      ></textarea>
+      />
     </div>
     <div class="flex flex-col">
       <label for="palate" class="mb-1 font-semibold">Palais</label>
       <textarea
-        v-model="whisky.palate"
         id="palate"
+        v-model="whisky.palate"
         class="rounded border p-2"
-      ></textarea>
+      />
     </div>
     <div class="flex flex-col">
       <label for="finish" class="mb-1 font-semibold">Finale</label>
       <textarea
-        v-model="whisky.finish"
         id="finish"
+        v-model="whisky.finish"
         class="rounded border p-2"
-      ></textarea>
+      />
     </div>
     <div class="flex flex-col">
       <label for="photo_file" class="mb-1 font-semibold"
         >Sélectionner une image</label
       >
       <input
-        @change="handleFileChange"
         id="photo_file"
         type="file"
         accept="image/*"
         class="rounded border p-2"
+        @change="handleFileChange"
       />
     </div>
     <button

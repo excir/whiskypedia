@@ -5,17 +5,17 @@
         <span class="headline">Backup & Restore</span>
       </v-card-title>
       <v-card-text>
-        <v-btn color="primary" @click="downloadBackup"
-          >Télécharger Backup</v-btn
-        >
+        <v-btn color="primary" @click="downloadBackup">
+          Télécharger Backup
+        </v-btn>
         <v-file-input
           v-model="file"
           label="Uploader un fichier zip pour restaurer"
           accept=".zip"
-        ></v-file-input>
-        <v-btn color="primary" @click="uploadBackup" :disabled="!file"
-          >Restaurer</v-btn
-        >
+        />
+        <v-btn color="primary" :disabled="!file" @click="uploadBackup">
+          Restaurer
+        </v-btn>
       </v-card-text>
     </v-card>
   </div>

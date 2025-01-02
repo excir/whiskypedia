@@ -7,7 +7,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <NotationForm :whiskyId="whiskyId" @submit="addTasting" />
+        <NotationForm :whisky-id="whiskyId" @submit="addTasting" />
       </v-col>
     </v-row>
   </v-container>

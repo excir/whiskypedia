@@ -1,11 +1,13 @@
 <template>
   <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
     <div class="p-4">
-      <h1 class="text-2xl font-bold text-gray-900">{{ negociant.name }}</h1>
-      <p class="mt-2 text-gray-600" v-if="negociant.country">
+      <h1 class="text-2xl font-bold text-gray-900">
+        {{ negociant.name }}
+      </h1>
+      <p v-if="negociant.country" class="mt-2 text-gray-600">
         Pays: {{ negociant.country.data }}
       </p>
-      <p class="mt-2 text-gray-600" v-if="negociant.notes">
+      <p v-if="negociant.notes" class="mt-2 text-gray-600">
         {{ negociant.notes }}
       </p>
     </div>

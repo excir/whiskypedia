@@ -1,13 +1,13 @@
 <template>
   <form
-    @submit.prevent="handleSubmit"
     class="space-y-4 rounded bg-white p-4 shadow-md"
+    @submit.prevent="handleSubmit"
   >
     <div class="flex flex-col">
       <label for="name" class="mb-1 font-semibold">Nom</label>
       <input
-        v-model="negociant.name"
         id="name"
+        v-model="negociant.name"
         type="text"
         required
         class="rounded border p-2"
@@ -16,8 +16,8 @@
     <div class="flex flex-col">
       <label for="country_id" class="mb-1 font-semibold">Pays</label>
       <select
-        v-model="negociant.country_id"
         id="country_id"
+        v-model="negociant.country_id"
         class="rounded border p-2"
       >
         <option
@@ -32,10 +32,10 @@
     <div class="flex flex-col">
       <label for="notes" class="mb-1 font-semibold">Notes</label>
       <textarea
-        v-model="negociant.notes"
         id="notes"
+        v-model="negociant.notes"
         class="rounded border p-2"
-      ></textarea>
+      />
     </div>
     <button
       type="submit"

@@ -3,17 +3,17 @@
     <v-card>
       <v-card-text>
         <v-data-table :headers="headers" :items="libraries" class="elevation-1">
-          <template v-slot:top>
+          <template #top>
             <v-toolbar flat>
               <v-toolbar-title>{{ name }}</v-toolbar-title>
-              <v-divider class="mx-4" inset vertical></v-divider>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="showAddDialog = true"
-                >Add {{ name }}</v-btn
-              >
+              <v-divider class="mx-4" inset vertical />
+              <v-spacer />
+              <v-btn color="primary" @click="showAddDialog = true">
+                Add {{ name }}
+              </v-btn>
             </v-toolbar>
           </template>
-          <template v-slot:item.actions="{ item }">
+          <template #item.actions="{ item }">
             <v-btn icon @click="editLibrary(item)">
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
@@ -32,19 +32,15 @@
         </v-card-title>
         <v-card-text>
           <v-form ref="form">
-            <v-text-field
-              v-model="newLibrary.data"
-              label="Data"
-              required
-            ></v-text-field>
+            <v-text-field v-model="newLibrary.data" label="Data" required />
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="showAddDialog = false"
-            >Cancel</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="addLibrary">Add</v-btn>
+          <v-spacer />
+          <v-btn color="blue darken-1" text @click="showAddDialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="addLibrary"> Add </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -60,15 +56,17 @@
               v-model="editLibraryData.data"
               label="Data"
               required
-            ></v-text-field>
+            />
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="showEditDialog = false"
-            >Cancel</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="updateLibrary">Save</v-btn>
+          <v-spacer />
+          <v-btn color="blue darken-1" text @click="showEditDialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="updateLibrary">
+            Save
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -83,13 +81,13 @@
           Êtes-vous sûr de vouloir supprimer cet élément ?
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="showDeleteDialog = false"
-            >Annuler</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="deleteLibrary"
-            >Supprimer</v-btn
-          >
+          <v-spacer />
+          <v-btn color="blue darken-1" text @click="showDeleteDialog = false">
+            Annuler
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="deleteLibrary">
+            Supprimer
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

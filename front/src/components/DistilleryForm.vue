@@ -1,13 +1,13 @@
 <template>
   <form
-    @submit.prevent="handleSubmit"
     class="space-y-4 rounded bg-white p-4 shadow-md"
+    @submit.prevent="handleSubmit"
   >
     <div class="flex flex-col">
       <label for="name" class="mb-1 font-semibold">Nom</label>
       <input
-        v-model="distillery.name"
         id="name"
+        v-model="distillery.name"
         type="text"
         required
         class="rounded border p-2"
@@ -16,8 +16,8 @@
     <div class="flex flex-col">
       <label for="country_id" class="mb-1 font-semibold">Pays</label>
       <select
-        v-model="distillery.country_id"
         id="country_id"
+        v-model="distillery.country_id"
         required
         class="rounded border p-2"
       >
@@ -33,10 +33,10 @@
     <div class="flex flex-col">
       <label for="notes" class="mb-1 font-semibold">Notes</label>
       <textarea
-        v-model="distillery.notes"
         id="notes"
+        v-model="distillery.notes"
         class="rounded border p-2"
-      ></textarea>
+      />
     </div>
     <button
       type="submit"

@@ -3,7 +3,7 @@
     <v-container>
       <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold">Whisky</h1>
-        <v-btn @click="createWhisky">Créer un Whisky</v-btn>
+        <v-btn @click="createWhisky"> Créer un Whisky </v-btn>
       </div>
       <v-data-table :headers="headers" :items="whiskiesWithRatings">
         <template #item.averageRating="{ item }">
@@ -31,18 +31,20 @@
 
       <v-dialog v-model="deleteDialog" max-width="400">
         <v-card>
-          <v-card-title class="headline">Confirmer la suppression</v-card-title>
-          <v-card-text
-            >Êtes-vous sûr de vouloir supprimer ce whisky ?</v-card-text
-          >
+          <v-card-title class="headline">
+            Confirmer la suppression
+          </v-card-title>
+          <v-card-text>
+            Êtes-vous sûr de vouloir supprimer ce whisky ?
+          </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" boolean @click="deleteDialog = false"
-              >Annuler</v-btn
-            >
-            <v-btn color="blue darken-1" boolean @click="deleteWhisky"
-              >Confirmer</v-btn
-            >
+            <v-spacer />
+            <v-btn color="blue darken-1" boolean @click="deleteDialog = false">
+              Annuler
+            </v-btn>
+            <v-btn color="blue darken-1" boolean @click="deleteWhisky">
+              Confirmer
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
