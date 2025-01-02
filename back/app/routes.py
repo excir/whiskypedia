@@ -44,7 +44,7 @@ def update_distillery(distillery_id):
     if distillery:
         for key, value in data.items():
             setattr(distillery, key, value)
-        DistilleryRepository.update()
+        distillery = DistilleryRepository.update(distillery=distillery)
         return jsonify(distillery.to_dict())
     return jsonify({'error': 'Distillery not found'}), 404
 
@@ -96,7 +96,7 @@ def update_whisky(whisky_id):
     if whisky:
         for key, value in data.items():
             setattr(whisky, key, value)
-        WhiskyRepository.update()
+        whisky = WhiskyRepository.update(whisky)
         return jsonify(whisky.to_dict())
     return jsonify({'error': 'Whisky not found'}), 404
 
@@ -140,7 +140,7 @@ def update_tasting(tasting_id):
     if tasting:
         for key, value in data.items():
             setattr(tasting, key, value)
-        TastingRepository.update()
+        tasting = TastingRepository.update(tasting)
         return jsonify(tasting.to_dict())
     return jsonify({'error': 'Tasting not found'}), 404
 
@@ -183,7 +183,7 @@ def update_negociant(negociant_id):
     if negociant:
         for key, value in data.items():
             setattr(negociant, key, value)
-        NegociantRepository.update()
+        negociant = NegociantRepository.update(negociant)
         return jsonify(negociant.to_dict())
     return jsonify({'error': 'Negociant not found'}), 404
 

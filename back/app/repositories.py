@@ -14,18 +14,22 @@ class DistilleryRepository:
     @staticmethod
     def get_by_id(distillery_id: int) -> Distillery:
         """Récupère une distillerie par son ID."""
-        return Distillery.query.get(distillery_id)
+        return db.session.get(Distillery, distillery_id)
 
     @staticmethod
-    def add(distillery: Distillery) -> None:
+    def add(distillery: Distillery) -> Distillery:
         """Ajoute une nouvelle distillerie."""
         db.session.add(distillery)
         db.session.commit()
+        db.session.refresh(distillery)
+        return distillery
 
     @staticmethod
-    def update() -> None:
+    def update(distillery: Distillery) -> Distillery:
         """Met à jour une distillerie existante."""
         db.session.commit()
+        db.session.refresh(distillery)
+        return distillery
 
     @staticmethod
     def delete(distillery: Distillery) -> None:
@@ -44,18 +48,22 @@ class NegociantRepository:
     @staticmethod
     def get_by_id(negociant_id: int) -> Negociant:
         """Récupère un négociant par son ID."""
-        return Negociant.query.get(negociant_id)
+        return db.session.get(Negociant, negociant_id)
 
     @staticmethod
-    def add(negociant: Negociant) -> None:
+    def add(negociant: Negociant) -> Negociant:
         """Ajoute un nouveau négociant."""
         db.session.add(negociant)
         db.session.commit()
+        db.session.refresh(negociant)
+        return negociant
 
     @staticmethod
-    def update() -> None:
+    def update(negociant: Negociant) -> Negociant:
         """Met à jour un négociant existant."""
         db.session.commit()
+        db.session.refresh(negociant)
+        return negociant
 
     @staticmethod
     def delete(negociant: Negociant) -> None:
@@ -74,18 +82,22 @@ class WhiskyRepository:
     @staticmethod
     def get_by_id(whisky_id: int) -> Whisky:
         """Récupère un whisky par son ID."""
-        return Whisky.query.get(whisky_id)
+        return db.session.get(Whisky, whisky_id)
 
     @staticmethod
-    def add(whisky: Whisky) -> None:
+    def add(whisky: Whisky) -> Whisky:
         """Ajoute un nouveau whisky."""
         db.session.add(whisky)
         db.session.commit()
+        db.session.refresh(whisky)
+        return whisky
 
     @staticmethod
-    def update() -> None:
+    def update(whisky: Whisky) -> Whisky:
         """Met à jour un whisky existant."""
         db.session.commit()
+        db.session.refresh(whisky)
+        return whisky
 
     @staticmethod
     def delete(whisky: Whisky) -> None:
@@ -104,7 +116,7 @@ class TastingRepository:
     @staticmethod
     def get_by_id(tasting_id: int) -> Tasting:
         """Récupère une dégustation par son ID."""
-        return Tasting.query.get(tasting_id)
+        return db.session.get(Tasting, tasting_id)
 
     @staticmethod
     def add(tasting: Tasting) -> Tasting:
@@ -114,11 +126,12 @@ class TastingRepository:
         db.session.refresh(tasting)
         return tasting
 
-
     @staticmethod
-    def update() -> None:
+    def update(tasting: Tasting) -> Tasting:
         """Met à jour une dégustation existante."""
         db.session.commit()
+        db.session.refresh(tasting)
+        return tasting
 
     @staticmethod
     def delete(tasting: Tasting) -> None:
@@ -132,7 +145,7 @@ class LibraryRepository:
     @staticmethod
     def get_by_id(library_id: int) -> Library:
         """Récupère une bibliothèque par son ID."""
-        return Library.query.get(library_id)
+        return db.session.get(Library, library_id)
     
     @staticmethod
     def get_all() -> list[Library]:
@@ -147,7 +160,6 @@ class LibraryRepository:
         db.session.refresh(library)
         return library
 
-
     @staticmethod
     def delete(library: Library) -> None:
         """Supprime une bibliothèque."""
@@ -157,7 +169,7 @@ class LibraryRepository:
     @staticmethod
     def update(library_id: str, data: dict) -> Library:
         """Met à jour une bibliothèque existante."""
-        library = Library.query.get(library_id)
+        library = db.session.get(Library, library_id)
         if library:
             for key, value in data.items():
                 setattr(library, key, value)
